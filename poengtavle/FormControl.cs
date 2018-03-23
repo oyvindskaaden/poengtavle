@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace poengtavle
 {
-    public partial class Form1 : Form
+    public partial class FormControl : Form
     {
-        public Form1()
+        public FormControl()
         {
             InitializeComponent();
         }
