@@ -18,6 +18,8 @@ namespace poengtavle
         }
         List<Config> c = new List<Config>();
 
+        FormPoengtavle FP = new FormPoengtavle();
+
         LoadFunc lf = new LoadFunc();
 
         private void FormControl_Load(object sender, EventArgs e)
@@ -44,6 +46,7 @@ namespace poengtavle
                 case "Lagre":
                     break;
                 case "Åpne":
+                    FP.Show();
                     break;
                 case "Start":
                     break;                

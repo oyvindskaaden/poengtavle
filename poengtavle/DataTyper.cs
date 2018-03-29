@@ -8,8 +8,25 @@ using System.Drawing;
 
 namespace poengtavle
 {
-    class Timer : Panel
+    class Klokke
     {
+
+        #region Variabler og objekter
+        private Timer time = new Timer();
+        private Panel p = new Panel();
+
+        private Label Time = new Label();
+
+        #endregion
+
+        public Klokke()
+        {
+
+        }
+
+
+
+
     }
 
     class TimerMs : Timer
@@ -17,20 +34,28 @@ namespace poengtavle
 
     }
 
-    class Poeng : Panel
+    class Perioder
     {
 
     }
 
-    class PoengNavn : Panel
+    class Poeng
     {
 
     }
 
-    class Periode : Panel
+    class PoengNavn
     {
 
     }
 
-    class 
+    class Periode
+    {
+
+    }
+
+    class Utvisninger
+    {
+
+    }
 }
