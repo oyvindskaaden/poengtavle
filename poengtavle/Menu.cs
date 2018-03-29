@@ -11,7 +11,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace poengtavle
 {
-    class Meny
+    class LoadFunc
     {
         /// <summary>
         /// 
@@ -76,14 +76,18 @@ namespace poengtavle
             return c;
         }
 
-        public void WriteJSON(List<object> o, string path)
+        public void WriteJSON(List<Config> o, string path)
         {
-            if (!File.Exists(path))
-                File.Create(path);
+            
+            //if (!File.Exists(path))
+            //{
+                File.Create(path).Close();
+            //}
+            
             
             using (StreamWriter sw = new StreamWriter(path))
             {
-                foreach (object s in o)
+                foreach (Config s in o)
                 {
                     string r = JsonConvert.SerializeObject(s, Formatting.Indented);
                     sw.WriteLine(r);

@@ -16,10 +16,14 @@ namespace poengtavle
         {
             InitializeComponent();
         }
+        List<Config> c = new List<Config>();
+
+        LoadFunc lf = new LoadFunc();
 
         private void FormControl_Load(object sender, EventArgs e)
         {
-
+            c.Add(new Config("PictureBox", new Point(2, 2), new string[] { "Test", "Test2" }));
+            c.Add(new Config("TextBox", new Point(1, 0), new string[] { "Test1_0", "Test1_1", "Test1_2" }));
         }
 
         private void MenuClicked(object sender, EventArgs e)
@@ -30,6 +34,7 @@ namespace poengtavle
             {
                 case "Ny":
                 case "Poengtavle":
+                    lf.WriteJSON(c, System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\test.json");
                     break;
                 case "Fra mal":
                     break;
