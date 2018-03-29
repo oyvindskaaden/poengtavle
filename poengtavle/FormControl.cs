@@ -16,5 +16,34 @@ namespace poengtavle
         {
             InitializeComponent();
         }
+
+        private void FormControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MenuClicked(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            switch (b.Text)
+            {
+                case "Ny":
+                case "Poengtavle":
+                    break;
+                case "Fra mal":
+                    break;
+                case "Mal":
+                case "Ny mal":
+                    break;
+                case "Lagre":
+                    break;
+                case "Åpne":
+                    break;
+                case "Start":
+                    break;                
+            }
+
+        }
     }
 }
