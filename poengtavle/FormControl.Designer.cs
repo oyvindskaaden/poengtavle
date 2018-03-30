@@ -249,6 +249,10 @@
             this.panel2.Size = new System.Drawing.Size(372, 210);
             this.panel2.TabIndex = 3;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.MenuClicked);
+            // 
             // FormControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
