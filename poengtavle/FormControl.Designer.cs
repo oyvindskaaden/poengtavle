@@ -43,17 +43,16 @@
             this.fraMalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.malToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pMenu = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.openReprise = new System.Windows.Forms.OpenFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStripStd.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripStd
@@ -175,18 +174,18 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.MenuClicked);
             // 
-            // panel1
+            // pMenu
             // 
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(12, 36);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(416, 292);
-            this.panel1.TabIndex = 2;
+            this.pMenu.Controls.Add(this.label2);
+            this.pMenu.Controls.Add(this.label1);
+            this.pMenu.Controls.Add(this.button4);
+            this.pMenu.Controls.Add(this.button3);
+            this.pMenu.Controls.Add(this.button2);
+            this.pMenu.Controls.Add(this.button1);
+            this.pMenu.Location = new System.Drawing.Point(12, 36);
+            this.pMenu.Name = "pMenu";
+            this.pMenu.Size = new System.Drawing.Size(416, 292);
+            this.pMenu.TabIndex = 2;
             // 
             // label2
             // 
@@ -242,13 +241,6 @@
             // 
             this.openReprise.FileName = "Åpne...";
             // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(489, 88);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(372, 210);
-            this.panel2.TabIndex = 3;
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.MenuClicked);
@@ -260,8 +252,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(953, 544);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pMenu);
             this.Controls.Add(this.menuStripStd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStripStd;
@@ -271,8 +262,8 @@
             this.Load += new System.EventHandler(this.FormControl_Load);
             this.menuStripStd.ResumeLayout(false);
             this.menuStripStd.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pMenu.ResumeLayout(false);
+            this.pMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,14 +285,13 @@
         private System.Windows.Forms.ToolStripMenuItem fraMalToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem malToolStripMenuItem1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pMenu;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openReprise;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timer1;
     }
 }

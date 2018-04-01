@@ -19,13 +19,19 @@ namespace poengtavle
         List<Config> c = new List<Config>();
 
         FormPoengtavle FP = new FormPoengtavle();
+        //FormPoengtavle Fp2 = new FormPoengtavle();
 
         LoadFunc lf = new LoadFunc();
 
+        List<Form> formPoeng = new List<Form>();
+        List<DataTyper> controlList = new List<DataTyper>();
+
         private void FormControl_Load(object sender, EventArgs e)
         {
-            c.Add(new Config("PictureBox", new Point(2, 2), new string[] { "Test", "Test2" }));
-            c.Add(new Config("TextBox", new Point(1, 0), new string[] { "Test1_0", "Test1_1", "Test1_2" }));
+            formPoeng.Add(FP);
+            //formPoeng.Add(Fp2);
+            c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
+            c.Add(new Config("Poeng", new Point(240, 34), new string[] { "Testlag2", "1"}));
         }
 
         private void MenuClicked(object sender, EventArgs e)
@@ -39,6 +45,9 @@ namespace poengtavle
                     lf.WriteJSON(c, System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\test.json");
                     break;
                 case "Fra mal":
+                    controlList.Add(new Poeng(c[0], this, formPoeng));
+                    controlList.Add(new Poeng(c[1], this, formPoeng));
+                    pMenu.Visible = false;
                     break;
                 case "Mal":
                 case "Ny mal":
@@ -46,7 +55,8 @@ namespace poengtavle
                 case "Lagre":
                     break;
                 case "Åpne":
-                    FP.Show();
+                    formPoeng[0].Show();
+                    //formPoeng[1].Show();
                     break;
                 case "Start":
                     break;                
