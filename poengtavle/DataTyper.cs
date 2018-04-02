@@ -20,14 +20,177 @@ namespace poengtavle
 
     class Klokke : DataTyper
     {
+        #region Variabler
 
-        #region Variabler og objekter
+        int interval;
+        int totalTime;
+        int curTime;
+
+        bool countUp = true;
+        bool decimalPlace;
+
+        Point pos;
+        int width = 200;
+        int height = 150;
 
         #endregion
 
         public Klokke(Config config, Form formKontroll, List<Form> formPoeng)
         {
+            pos = config.Pos;
+            totalTime = Convert.ToInt32(config.Info[0]) * 1000;
+            interval = Convert.ToInt32(config.Info[1]);
+            if (interval < 1000)
+                decimalPlace = true;
+            countUp = Convert.ToBoolean(config.Info[2]);
+            if (!countUp)
+                curTime = totalTime;
 
+            DecleareControls(config);
+            AddControls(formKontroll, formPoeng);
+        }
+
+        #region Objekter
+
+        Panel pKontrol = new Panel();
+        Panel pPoeng = new Panel();
+
+        Timer timer = new Timer();
+
+        Label lVisning = new Label();
+        Label lVisningKontrol = new Label();
+
+        Button bStart = new Button();
+        Button bStop = new Button();
+        Button bNullstill = new Button();
+        CheckBox isCountDown = new CheckBox();
+
+        #region Panel med nedtelling
+        Panel pNedtell = new Panel();
+        NumericUpDown minutter = new NumericUpDown();
+        NumericUpDown sekunder = new NumericUpDown();
+        Label lMinutter = new Label();
+        Label lSekunder = new Label();
+        #endregion
+
+        #endregion
+
+
+        private void DecleareControls(Config config)
+        {
+            pNedtell.Controls.Add(minutter);
+            pNedtell.Controls.Add(sekunder);
+            pNedtell.Controls.Add(lMinutter);
+            pNedtell.Controls.Add(lSekunder);
+
+            pKontrol.Controls.Add(lVisningKontrol);
+            pKontrol.Controls.Add(bStart);
+            pKontrol.Controls.Add(bStop);
+            pKontrol.Controls.Add(bNullstill);
+            pKontrol.Controls.Add(isCountDown);
+            pKontrol.Controls.Add(pNedtell);
+
+            pPoeng.Controls.Add(lVisning);
+
+            pKontrol.Location = pos;
+            pKontrol.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pKontrol.Size = new Size(width, height);
+
+            pPoeng.Location = pos;
+            pPoeng.Size = new Size(width, height);
+
+            #region Panel for nedtelling
+
+            pNedtell.Location = new Point(16, 94);
+            pNedtell.Size = new Size(150, 53);
+            pNedtell.Visible = true;
+
+            minutter.Location = new Point(15, 27);
+            minutter.Size = new Size(44, 20);
+            minutter.Maximum = 300;
+            minutter.Value = (totalTime / 1000) / 60;
+
+            sekunder.Location = new Point(65, 27);
+            sekunder.Size = new Size(44, 20);
+            sekunder.Maximum = 59;
+            sekunder.Value = (totalTime / 1000) % 60;
+
+            lMinutter.Location = new Point(14, 11);
+            lMinutter.Text = "Minutter";
+
+            lSekunder.Location = new Point(64, 11);
+            lSekunder.Text = "Sekunder";
+            lSekunder.AutoSize = true;
+
+            #endregion
+
+            #region PoengPanel
+
+            lVisning.Font = new System.Drawing.Font("Arial Black", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lVisning.AutoSize = true;
+            lVisning.Text = GetTime(curTime);
+            CenterOnXY(lVisning, new Point(width / 2, height / 2));
+
+
+            #endregion
+
+
+
+
+        }
+
+        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        {
+            formKontrol.Controls.Add(pKontrol);
+
+            foreach(Form f in formPoeng)
+            {
+                f.Controls.Add(pPoeng);
+            }
+        }
+
+        private string GetTime(int time)
+        {
+            int min = 0;
+            int sek = 0;
+            int dec = 0;
+
+            string sMin = "";
+            string sSek = "";
+            string sDec = "";
+
+            string s = "";
+            string t = Convert.ToString(time);
+
+            string[] tall = new string[2];
+
+            decimal totaltime = time / 1000;
+
+            min = (int)totaltime / 60;
+            sek = (int)totaltime % 60;
+            if (decimalPlace)
+            {
+                dec = (int)((time - (min * 60 * 1000) - (sek * 1000)) / 100);
+                sDec = Convert.ToString(dec);
+            }
+
+
+            if (min < 10)
+                sMin += "0";
+            if (sek < 10)
+                sSek += "0";
+
+            sMin += Convert.ToString(min);
+            sSek += Convert.ToString(sek);
+
+            s = sMin + ":" + sSek;
+
+            if (decimalPlace)
+            {
+                s += "." + sDec;
+            }
+            
+            return s;
         }
     }
 
