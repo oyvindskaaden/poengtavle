@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -57,10 +58,11 @@ namespace poengtavle
             }
         }
 
+        #region JSON
         /// <summary>
-        /// 
+        /// Reads a JSON-file at desired path 
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">Path for JSON-file</param>
         /// <returns></returns>
         public JObject ReadJSON(string path)
         {
@@ -69,6 +71,11 @@ namespace poengtavle
             return j;
         }
 
+        /// <summary>
+        /// Reads and parses a formatted JSON-file to the Config datatype
+        /// </summary>
+        /// <param name="path">Path for JSON-file</param>
+        /// <returns></returns>
         public List<Config> ReadJSONtoObject(string path)
         {
             string json = File.ReadAllText(path);
@@ -76,23 +83,37 @@ namespace poengtavle
             return c;
         }
 
+        /// <summary>
+        /// Writes a formatted JSON-file from Config datatypes at specified path
+        /// </summary>
+        /// <param name="o">List of Config datatype</param>
+        /// <param name="path">Path for writing the JSON-file to</param>
         public void WriteJSON(List<Config> o, string path)
         {
             
-            //if (!File.Exists(path))
-            //{
-                File.Create(path).Close();
-            //}
-            
+            File.Create(path).Close();
+
+            List<string> printList = new List<string>();
+            printList.Add("[");
+
+            foreach (Config s in o)
+            {
+                string line = JsonConvert.SerializeObject(s, Formatting.Indented);
+                if (s != o[o.Count - 1])
+                    line += ",";
+
+                printList.Add(line);
+            }
+            printList.Add("]");
             
             using (StreamWriter sw = new StreamWriter(path))
             {
-                foreach (Config s in o)
+                foreach (string s in printList)
                 {
-                    string r = JsonConvert.SerializeObject(s, Formatting.Indented);
-                    sw.WriteLine(r);
+                    sw.WriteLine(s);
                 }
             }
         }
+        #endregion
     }
 }

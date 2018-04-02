@@ -139,10 +139,9 @@
             // 
             // startFullskjermToolStripMenuItem
             // 
-            this.startFullskjermToolStripMenuItem.CheckOnClick = true;
             this.startFullskjermToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startFullskjermToolStripMenuItem.Name = "startFullskjermToolStripMenuItem";
-            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startFullskjermToolStripMenuItem.Text = "Start";
             this.startFullskjermToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -172,7 +171,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Ny";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.MenuClicked);
+            this.button1.Click += new System.EventHandler(this.ButtonPressed);
             // 
             // pMenu
             // 
@@ -215,7 +214,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Åpne";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.MenuClicked);
+            this.button4.Click += new System.EventHandler(this.ButtonPressed);
             // 
             // button3
             // 
@@ -225,7 +224,7 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "Ny mal";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.MenuClicked);
+            this.button3.Click += new System.EventHandler(this.ButtonPressed);
             // 
             // button2
             // 
@@ -235,15 +234,11 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Fra mal";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.MenuClicked);
+            this.button2.Click += new System.EventHandler(this.ButtonPressed);
             // 
             // openReprise
             // 
             this.openReprise.FileName = "Åpne...";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.MenuClicked);
             // 
             // FormControl
             // 

@@ -18,86 +18,20 @@ namespace poengtavle
         }
     }
 
-    class Klokke
+    class Klokke : DataTyper
     {
 
         #region Variabler og objekter
-        private Timer time = new Timer();
-        private Panel pPoeng = new Panel();
-        private Panel pKontroll = new Panel();
-
-        private Label lPoeng = new Label();
-        private Label lKontrol = new Label();
-
-        int height = 50;
-        int width = 100;
-
-        bool countUp;
-        int totalTime;
-        int periods;
-
-        bool isRunning = false;
 
         #endregion
 
-        public Klokke(Config config)
-        {
-            time.Tick += new System.EventHandler(Sekund);
-            pPoeng.Location = config.Pos;
-
-            totalTime = Convert.ToInt32(config.Info[0]);
-            countUp = Convert.ToBoolean(config.Info[1]);
-            time.Interval = Convert.ToInt32(config.Info[2]);
-            if (config.Info[3] != "")
-                periods = Convert.ToInt32(config.Info[3]);
-
-            pPoeng.Controls.Add(lPoeng);
-            lPoeng.Anchor = AnchorStyles.None;
-            lPoeng.Location = new Point(height / 2, width / 2);
-
-            
-
-        }
-
-        public void Sekund(Object sender, EventArgs e)
+        public Klokke(Config config, Form formKontroll, List<Form> formPoeng)
         {
 
         }
-
-        public void ToggleTick()
-        {
-            if (isRunning)
-            {
-                isRunning = false;
-                time.Stop();
-            }
-            else
-            {
-                isRunning = true;
-                time.Start();
-            }
-        }
-
-        public bool Running
-        {
-            get { return isRunning; }
-            set { isRunning = value; Enable(); }
-        }
-
-        private void Enable()
-        {
-            if (isRunning)
-                time.Start();
-            else
-                time.Stop();
-        }
-
-
-
-
     }
 
-    class Perioder
+    class Perioder : DataTyper
     {
 
     }
@@ -108,6 +42,7 @@ namespace poengtavle
         string navn;
         int poeng = 0;
         int inc;
+        Point pos;
 
         int width = 220;
         int height = 200;
@@ -120,6 +55,7 @@ namespace poengtavle
 
         Label title = new Label();
         Label nameTitle = new Label();
+        Label lKontolPoint = new Label();
 
         TextBox nameText = new TextBox();
         Button bSubName = new Button();
@@ -137,6 +73,7 @@ namespace poengtavle
         {
             navn = config.Info[0];
             inc = Convert.ToInt32(config.Info[1]);
+            pos = config.Pos;
 
             DeclareControls(config);
             AddControls(formKontrol, formPoeng);
@@ -149,6 +86,7 @@ namespace poengtavle
             pPoeng.Controls.Add(sum);
 
             pKontrol.Controls.Add(title);
+            pKontrol.Controls.Add(lKontolPoint);
             pKontrol.Controls.Add(bInc);
             pKontrol.Controls.Add(bDinc);
             pKontrol.Controls.Add(nameTitle);
@@ -158,14 +96,17 @@ namespace poengtavle
             pKontrol.Controls.Add(increment);
 
             pKontrol.Size = new Size(width, height);
-            pKontrol.Location = config.Pos;
+            pKontrol.Location = pos;
             pKontrol.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pPoeng.Size = new Size(width, height);
-            pPoeng.Location = config.Pos;
+            pPoeng.Location = pos;
 
             title.Text = "Kontroll for " + navn;
             title.AutoSize = true;
             CenterOnXY(title, new Point(width / 2, 12));
+
+            lKontolPoint.Text = "Poengsum: " + poeng;
+            CenterOnXY(lKontolPoint, new Point(width / 2, 35));
 
             bInc.Text = buttonInc;
             bInc.Location = new Point(123, height / 4);
@@ -232,6 +173,8 @@ namespace poengtavle
 
             sum.Text = Convert.ToString(poeng);
             CenterOnXY(sum, new Point(width / 2, (height / 2)));
+            lKontolPoint.Text = "Poengsum: " + poeng;
+            CenterOnXY(lKontolPoint, new Point(width / 2, 35));
         }
 
         private void AddControls(Form formKontrol, List<Form> formPoeng)
@@ -250,9 +193,14 @@ namespace poengtavle
             }
         }
 
+        public Config GetConfig()
+        {
+            return new Config("Poeng", pos, new string[] { navn, Convert.ToString(inc) });
+        }
+
     }
 
-    class PoengNavn
+    class Reklame : DataTyper
     {
 
     }
