@@ -29,6 +29,8 @@ namespace poengtavle
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
             c.Add(new Config("Klokke", new Point(240, 34), new string[] { "5400", "100", "true" }));
+            c.Add(new Config("Poeng", new Point(10, 244), new string[] { "testLag3", "2" }));
+            c.Add(new Config("Poeng", new Point(450, 244), new string[] { "testLag3", "2" }));
         }
 
         private void MenuClicked(string s)

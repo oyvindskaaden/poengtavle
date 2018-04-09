@@ -31,7 +31,7 @@ namespace poengtavle
 
         Point pos;
         int width = 200;
-        int height = 150;
+        int height = 200;
 
         #endregion
 
@@ -103,6 +103,7 @@ namespace poengtavle
 
             pNedtell.Location = new Point(16, 94);
             pNedtell.Size = new Size(150, 53);
+            pNedtell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pNedtell.Visible = true;
 
             minutter.Location = new Point(15, 27);
@@ -120,6 +121,7 @@ namespace poengtavle
 
             lSekunder.Location = new Point(64, 11);
             lSekunder.Text = "Sekunder";
+            lSekunder.Size = new Size(53, 13);
             lSekunder.AutoSize = true;
 
             #endregion
