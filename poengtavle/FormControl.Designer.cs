@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormControl));
             this.menuStripStd = new System.Windows.Forms.MenuStrip();
             this.filToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lagreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,9 +62,9 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.mediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.menuStripStd.SuspendLayout();
             this.pMenu.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -71,6 +72,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStripStd
@@ -261,9 +263,9 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(582, 167);
+            this.panel1.Location = new System.Drawing.Point(741, 115);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 150);
+            this.panel1.Size = new System.Drawing.Size(200, 200);
             this.panel1.TabIndex = 3;
             // 
             // label3
@@ -281,12 +283,11 @@
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.checkBox1);
-            this.panel2.Controls.Add(this.button7);
             this.panel2.Controls.Add(this.button6);
             this.panel2.Controls.Add(this.button5);
-            this.panel2.Location = new System.Drawing.Point(582, 345);
+            this.panel2.Location = new System.Drawing.Point(741, 332);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 150);
+            this.panel2.Size = new System.Drawing.Size(200, 200);
             this.panel2.TabIndex = 4;
             // 
             // label6
@@ -304,7 +305,7 @@
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.numericUpDown1);
             this.panel3.Controls.Add(this.numericUpDown2);
-            this.panel3.Location = new System.Drawing.Point(16, 94);
+            this.panel3.Location = new System.Drawing.Point(16, 81);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(124, 53);
             this.panel3.TabIndex = 5;
@@ -354,21 +355,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 76);
+            this.checkBox1.Location = new System.Drawing.Point(16, 63);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(80, 17);
             this.checkBox1.TabIndex = 5;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(97, 61);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 2;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
@@ -388,6 +380,16 @@
             this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
             // 
+            // mediaPlayer
+            // 
+            this.mediaPlayer.Enabled = true;
+            this.mediaPlayer.Location = new System.Drawing.Point(28, 476);
+            this.mediaPlayer.Name = "mediaPlayer";
+            this.mediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("mediaPlayer.OcxState")));
+            this.mediaPlayer.Size = new System.Drawing.Size(261, 56);
+            this.mediaPlayer.TabIndex = 5;
+            this.mediaPlayer.Visible = false;
+            // 
             // FormControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,6 +397,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(953, 544);
+            this.Controls.Add(this.mediaPlayer);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pMenu);
@@ -417,6 +420,7 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -449,7 +453,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
@@ -459,6 +462,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private AxWMPLib.AxWindowsMediaPlayer mediaPlayer;
     }
 }
 
