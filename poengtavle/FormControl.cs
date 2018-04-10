@@ -31,6 +31,8 @@ namespace poengtavle
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+
+            mediaPlayer.URL = (System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Pegboard Nerds.mp3");
             
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
@@ -83,6 +85,16 @@ namespace poengtavle
                         break;
                 }
             }
+        }
+
+        public void PlayMusic()
+        {
+            mediaPlayer.Ctlcontrols.play();
+        }
+        
+        public void PauseMusic()
+        {
+            mediaPlayer.Ctlcontrols.pause();
         }
 
         #region Button and menu handlers

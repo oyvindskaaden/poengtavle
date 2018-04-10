@@ -27,21 +27,21 @@ namespace poengtavle
         int curTime;
 
         bool countDown = true;
-        bool decimalPlace;
 
         Point pos;
         int width = 200;
         int height = 200;
 
+        FormControl form;
+
         #endregion
 
-        public Klokke(Config config, Form formKontroll, List<Form> formPoeng)
+        public Klokke(Config config, FormControl formKontroll, List<Form> formPoeng)
         {
+            form = formKontroll;
             pos = config.Pos;
             totalTime = Convert.ToInt32(config.Info[0]) * 1000;
             interval = Convert.ToInt32(config.Info[1]);
-            if (interval < 1000)
-                decimalPlace = true;
             countDown = Convert.ToBoolean(config.Info[2]);
             if (countDown)
                 curTime = totalTime;
@@ -66,12 +66,27 @@ namespace poengtavle
         Button bNullstill = new Button();
         CheckBox isCountDown = new CheckBox();
 
+        CheckBox isStopp = new CheckBox();
+
+        Label lInter = new Label();
+        NumericUpDown nudInterval = new NumericUpDown();
+
+        CheckBox autoMusic = new CheckBox();
+
         #region Panel med nedtelling
         Panel pNedtell = new Panel();
         NumericUpDown minutter = new NumericUpDown();
         NumericUpDown sekunder = new NumericUpDown();
         Label lMinutter = new Label();
         Label lSekunder = new Label();
+        #endregion
+
+        #region Panel med nedtelling
+        Panel pStopp = new Panel();
+        NumericUpDown stoppMinutter = new NumericUpDown();
+        NumericUpDown stoppSekunder = new NumericUpDown();
+        Label lStoppMinutter = new Label();
+        Label lStoppSekunder = new Label();
         #endregion
 
         #endregion
@@ -83,11 +98,21 @@ namespace poengtavle
             pNedtell.Controls.Add(lMinutter);
             pNedtell.Controls.Add(lSekunder);
 
+            pStopp.Controls.Add(stoppMinutter);
+            pStopp.Controls.Add(stoppSekunder);
+            pStopp.Controls.Add(lStoppMinutter);
+            pStopp.Controls.Add(lStoppSekunder);
+
             pKontrol.Controls.Add(lVisningKontrol);
             pKontrol.Controls.Add(bStart);
             pKontrol.Controls.Add(bNullstill);
+            pKontrol.Controls.Add(lInter);
+            pKontrol.Controls.Add(nudInterval);
             pKontrol.Controls.Add(isCountDown);
             pKontrol.Controls.Add(pNedtell);
+            pKontrol.Controls.Add(isStopp);
+            pKontrol.Controls.Add(pStopp);
+            pKontrol.Controls.Add(autoMusic);
 
             pPoeng.Controls.Add(lVisning);
 
@@ -124,13 +149,33 @@ namespace poengtavle
             bNullstill.Text = "Nullstill";
             bNullstill.Click += new EventHandler(ButtonPressed);
 
+            lInter.Location = new Point(54, 48);
+            lInter.AutoSize = true;
+            lInter.Text = "Intervall i ms";
+
+            nudInterval.Location = new Point(120,46);
+            nudInterval.Minimum = 100;
+            nudInterval.Increment = 100;
+            nudInterval.Maximum = 1000;
+            nudInterval.Size = new Size(51, 20);
+            nudInterval.ReadOnly = true;
+            nudInterval.ValueChanged += new EventHandler(ChangeInterval);
+
             isCountDown.Location = new Point(16, 63);
             isCountDown.Text = "Telle ned fra?";
             isCountDown.CheckedChanged += new EventHandler(CheckCount);
 
+            isStopp.Location = new Point(16, 121);
+            isStopp.Text = "Stoppe ved tid?";
+            isStopp.CheckedChanged += new EventHandler(CheckStopp);
+
+            autoMusic.Location = new Point(16, 179);
+            autoMusic.AutoSize = true;
+            autoMusic.Text = "Auto start/stopp musikk";
+
             #region Panel for nedtelling
 
-            pNedtell.Location = new Point(16, 88);
+            pNedtell.Location = new Point(16, 82);
             pNedtell.Size = new Size(150, 38);
             pNedtell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pNedtell.Visible = isCountDown.Checked;
@@ -157,8 +202,50 @@ namespace poengtavle
 
             #endregion
 
+            #region Panel for stopp ved tid
+
+            pStopp.Location = new Point(16, 138);
+            pStopp.Size = new Size(150, 38);
+            pStopp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pStopp.Visible = isStopp.Checked;
+
+            stoppMinutter.Location = new Point(15, 15);
+            stoppMinutter.Size = new Size(44, 20);
+            stoppMinutter.Maximum = 300;
+            stoppMinutter.Value = 0;
+
+            stoppSekunder.Location = new Point(65, 15);
+            stoppSekunder.Size = new Size(44, 20);
+            stoppSekunder.Maximum = 59;
+            stoppSekunder.Value = 0;
+
+            lStoppMinutter.Location = new Point(14, 3);
+            lStoppMinutter.Text = "Minutter";
+
+            lStoppSekunder.Location = new Point(64, 3);
+            lStoppSekunder.AutoSize = true;
+            lStoppSekunder.Text = "Sekunder";
+            lStoppSekunder.Size = new Size(53, 13);
+
+
             #endregion
 
+            #endregion
+
+        }
+
+        private void CheckStopp(Object sender, EventArgs e)
+        {
+            pStopp.Visible = isStopp.Checked;
+        }
+
+        private void ChangeInterval(Object sender, EventArgs e)
+        {
+            NumericUpDown nud = sender as NumericUpDown;
+
+            timer.Interval = (int)nud.Value;
+
+            PrintTime();
         }
 
         private void ChangeTime(Object sender, EventArgs e)
@@ -194,15 +281,21 @@ namespace poengtavle
                 case "Start":
                     timer.Start();
                     b.Text = "Stopp";
+                    form.PauseMusic();
                     break;
                 case "Stopp":
                     timer.Stop();
                     b.Text = "Start";
+                    if (autoMusic.Checked)
+                        form.PlayMusic();
+
                     break;
                 case "Nullstill":
                     timer.Stop();
 
                     bStart.Text = "Start";
+
+                    form.PauseMusic();
 
                     if (!countDown)
                         curTime = 0;
@@ -282,8 +375,11 @@ namespace poengtavle
 
             s = m + ":" + s;
 
-            if (decimalPlace)
+            if (timer.Interval < 1000)
                 s += "." + ms[0];
+
+            if (min == stoppMinutter.Value && sec == stoppSekunder.Value && Convert.ToInt32(ms) == 0 && isStopp.Checked)
+                timer.Stop();
 
             return s;
         }
