@@ -93,26 +93,9 @@ namespace poengtavle
             
             File.Create(path).Close();
 
-            List<string> printList = new List<string>();
-            printList.Add("[");
+            string l = JsonConvert.SerializeObject(o, Formatting.Indented);
 
-            foreach (Config s in o)
-            {
-                string line = JsonConvert.SerializeObject(s, Formatting.Indented);
-                if (s != o[o.Count - 1])
-                    line += ",";
-
-                printList.Add(line);
-            }
-            printList.Add("]");
-            
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                foreach (string s in printList)
-                {
-                    sw.WriteLine(s);
-                }
-            }
+            using (StreamWriter sw = new StreamWriter(path)) { sw.WriteLine(l); }
         }
         #endregion
     }

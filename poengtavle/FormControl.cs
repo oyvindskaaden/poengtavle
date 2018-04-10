@@ -31,12 +31,14 @@ namespace poengtavle
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+            
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
             c.Add(new Config("Klokke", new Point(240, 34), new string[] { "5400", "100", "false" }));
             c.Add(new Config("Poeng", new Point(10, 244), new string[] { "testLag3", "2" }));
             c.Add(new Config("Poeng", new Point(450, 244), new string[] { "testLag4", "2" }));
-            c.Add(new Config("Klokke", new Point(240, 244), new string[] { "5400", "100", "false" }));
+            c.Add(new Config("Klokke", new Point(240, 244), new string[] { "0", "1000", "false" }));
+            
         }
 
         private void MenuClicked(string s)
