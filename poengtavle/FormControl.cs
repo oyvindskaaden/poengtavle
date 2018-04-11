@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace poengtavle
 {
@@ -23,14 +24,23 @@ namespace poengtavle
         List<Form> formPoeng = new List<Form>();
         List<DataTyper> controlList = new List<DataTyper>();
 
+        
+
+        
+
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+
+            mediaPlayer.URL = (System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Pegboard Nerds.mp3");
+            
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
-            c.Add(new Config("Klokke", new Point(240, 34), new string[] { "5400", "100", "true" }));
+            c.Add(new Config("Klokke", new Point(240, 34), new string[] { "5400", "100", "false" }));
             c.Add(new Config("Poeng", new Point(10, 244), new string[] { "testLag3", "2" }));
-            c.Add(new Config("Poeng", new Point(450, 244), new string[] { "testLag3", "2" }));
+            c.Add(new Config("Poeng", new Point(450, 244), new string[] { "testLag4", "2" }));
+            c.Add(new Config("Klokke", new Point(240, 244), new string[] { "0", "1000", "false" }));
+            
         }
 
         private void MenuClicked(string s)
@@ -75,6 +85,16 @@ namespace poengtavle
                         break;
                 }
             }
+        }
+
+        public void PlayMusic()
+        {
+            mediaPlayer.Ctlcontrols.play();
+        }
+        
+        public void PauseMusic()
+        {
+            mediaPlayer.Ctlcontrols.pause();
         }
 
         #region Button and menu handlers

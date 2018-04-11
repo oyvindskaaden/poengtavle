@@ -26,28 +26,30 @@ namespace poengtavle
         int totalTime;
         int curTime;
 
-        bool countUp = true;
-        bool decimalPlace;
+        bool countDown = true;
 
         Point pos;
         int width = 200;
         int height = 200;
 
+        FormControl form;
+
         #endregion
 
-        public Klokke(Config config, Form formKontroll, List<Form> formPoeng)
+        public Klokke(Config config, FormControl formKontroll, List<Form> formPoeng)
         {
+            form = formKontroll;
             pos = config.Pos;
             totalTime = Convert.ToInt32(config.Info[0]) * 1000;
             interval = Convert.ToInt32(config.Info[1]);
-            if (interval < 1000)
-                decimalPlace = true;
-            countUp = Convert.ToBoolean(config.Info[2]);
-            if (!countUp)
+            countDown = Convert.ToBoolean(config.Info[2]);
+            if (countDown)
                 curTime = totalTime;
+
 
             DecleareControls(config);
             AddControls(formKontroll, formPoeng);
+            CheckCount(new CheckBox() { Checked = countDown }, null);
         }
 
         #region Objekter
@@ -61,9 +63,15 @@ namespace poengtavle
         Label lVisningKontrol = new Label();
 
         Button bStart = new Button();
-        Button bStop = new Button();
         Button bNullstill = new Button();
         CheckBox isCountDown = new CheckBox();
+
+        CheckBox isStopp = new CheckBox();
+
+        Label lInter = new Label();
+        NumericUpDown nudInterval = new NumericUpDown();
+
+        CheckBox autoMusic = new CheckBox();
 
         #region Panel med nedtelling
         Panel pNedtell = new Panel();
@@ -73,8 +81,15 @@ namespace poengtavle
         Label lSekunder = new Label();
         #endregion
 
+        #region Panel med nedtelling
+        Panel pStopp = new Panel();
+        NumericUpDown stoppMinutter = new NumericUpDown();
+        NumericUpDown stoppSekunder = new NumericUpDown();
+        Label lStoppMinutter = new Label();
+        Label lStoppSekunder = new Label();
         #endregion
 
+        #endregion
 
         private void DecleareControls(Config config)
         {
@@ -83,12 +98,21 @@ namespace poengtavle
             pNedtell.Controls.Add(lMinutter);
             pNedtell.Controls.Add(lSekunder);
 
+            pStopp.Controls.Add(stoppMinutter);
+            pStopp.Controls.Add(stoppSekunder);
+            pStopp.Controls.Add(lStoppMinutter);
+            pStopp.Controls.Add(lStoppSekunder);
+
             pKontrol.Controls.Add(lVisningKontrol);
             pKontrol.Controls.Add(bStart);
-            pKontrol.Controls.Add(bStop);
             pKontrol.Controls.Add(bNullstill);
+            pKontrol.Controls.Add(lInter);
+            pKontrol.Controls.Add(nudInterval);
             pKontrol.Controls.Add(isCountDown);
             pKontrol.Controls.Add(pNedtell);
+            pKontrol.Controls.Add(isStopp);
+            pKontrol.Controls.Add(pStopp);
+            pKontrol.Controls.Add(autoMusic);
 
             pPoeng.Controls.Add(lVisning);
 
@@ -99,32 +123,7 @@ namespace poengtavle
             pPoeng.Location = pos;
             pPoeng.Size = new Size(width, height);
 
-            #region Panel for nedtelling
-
-            pNedtell.Location = new Point(16, 94);
-            pNedtell.Size = new Size(150, 53);
-            pNedtell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            pNedtell.Visible = true;
-
-            minutter.Location = new Point(15, 27);
-            minutter.Size = new Size(44, 20);
-            minutter.Maximum = 300;
-            minutter.Value = (totalTime / 1000) / 60;
-
-            sekunder.Location = new Point(65, 27);
-            sekunder.Size = new Size(44, 20);
-            sekunder.Maximum = 59;
-            sekunder.Value = (totalTime / 1000) % 60;
-
-            lMinutter.Location = new Point(14, 11);
-            lMinutter.Text = "Minutter";
-
-            lSekunder.Location = new Point(64, 11);
-            lSekunder.Text = "Sekunder";
-            lSekunder.Size = new Size(53, 13);
-            lSekunder.AutoSize = true;
-
-            #endregion
+            timer.Tick += new EventHandler(Tick);
 
             #region PoengPanel
 
@@ -136,9 +135,190 @@ namespace poengtavle
 
             #endregion
 
+            #region KontrolPanel
+
+            lVisningKontrol.AutoSize = true;
+            lVisningKontrol.Text = GetTime(curTime);
+            CenterOnXY(lVisningKontrol, new Point(width / 2, 8));
+
+            bStart.Location = new Point(16, 21);
+            bStart.Text = "Start";
+            bStart.Click += new EventHandler(ButtonPressed);
+
+            bNullstill.Location = new Point(97, 21);
+            bNullstill.Text = "Nullstill";
+            bNullstill.Click += new EventHandler(ButtonPressed);
+
+            lInter.Location = new Point(54, 48);
+            lInter.AutoSize = true;
+            lInter.Text = "Intervall i ms";
+
+            nudInterval.Location = new Point(120,46);
+            nudInterval.Minimum = 100;
+            nudInterval.Increment = 100;
+            nudInterval.Maximum = 1000;
+            nudInterval.Size = new Size(51, 20);
+            nudInterval.ReadOnly = true;
+            nudInterval.ValueChanged += new EventHandler(ChangeInterval);
+
+            isCountDown.Location = new Point(16, 63);
+            isCountDown.Text = "Telle ned fra?";
+            isCountDown.CheckedChanged += new EventHandler(CheckCount);
+
+            isStopp.Location = new Point(16, 121);
+            isStopp.Text = "Stoppe ved tid?";
+            isStopp.CheckedChanged += new EventHandler(CheckStopp);
+
+            autoMusic.Location = new Point(16, 179);
+            autoMusic.AutoSize = true;
+            autoMusic.Text = "Auto start/stopp musikk";
+
+            #region Panel for nedtelling
+
+            pNedtell.Location = new Point(16, 82);
+            pNedtell.Size = new Size(150, 38);
+            pNedtell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pNedtell.Visible = isCountDown.Checked;
+
+            minutter.Location = new Point(15, 15);
+            minutter.Size = new Size(44, 20);
+            minutter.Maximum = 300;
+            minutter.Value = (totalTime / 1000) / 60;
+            minutter.ValueChanged += new EventHandler(ChangeTime);
+
+            sekunder.Location = new Point(65, 15);
+            sekunder.Size = new Size(44, 20);
+            sekunder.Maximum = 59;
+            sekunder.Value = (totalTime / 1000) % 60;
+            sekunder.ValueChanged += new EventHandler(ChangeTime);
+
+            lMinutter.Location = new Point(14, 3);
+            lMinutter.Text = "Minutter";
+
+            lSekunder.Location = new Point(64, 3);
+            lSekunder.AutoSize = true;
+            lSekunder.Text = "Sekunder";
+            lSekunder.Size = new Size(53, 13);
+
+            #endregion
+
+            #region Panel for stopp ved tid
+
+            pStopp.Location = new Point(16, 138);
+            pStopp.Size = new Size(150, 38);
+            pStopp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pStopp.Visible = isStopp.Checked;
+
+            stoppMinutter.Location = new Point(15, 15);
+            stoppMinutter.Size = new Size(44, 20);
+            stoppMinutter.Maximum = 300;
+            stoppMinutter.Value = 0;
+
+            stoppSekunder.Location = new Point(65, 15);
+            stoppSekunder.Size = new Size(44, 20);
+            stoppSekunder.Maximum = 59;
+            stoppSekunder.Value = 0;
+
+            lStoppMinutter.Location = new Point(14, 3);
+            lStoppMinutter.Text = "Minutter";
+
+            lStoppSekunder.Location = new Point(64, 3);
+            lStoppSekunder.AutoSize = true;
+            lStoppSekunder.Text = "Sekunder";
+            lStoppSekunder.Size = new Size(53, 13);
 
 
+            #endregion
 
+            #endregion
+
+        }
+
+        private void CheckStopp(Object sender, EventArgs e)
+        {
+            pStopp.Visible = isStopp.Checked;
+        }
+
+        private void ChangeInterval(Object sender, EventArgs e)
+        {
+            NumericUpDown nud = sender as NumericUpDown;
+
+            timer.Interval = (int)nud.Value;
+
+            PrintTime();
+        }
+
+        private void ChangeTime(Object sender, EventArgs e)
+        {
+            totalTime = (((int)minutter.Value * 60) + (int)sekunder.Value) * 1000;
+
+            if (countDown)
+                curTime = totalTime;
+            
+            ButtonPressed(new Button() { Text = "Nullstill" }, null);
+        }
+
+        private void CheckCount(Object sender, EventArgs e)
+        {
+            CheckBox c = sender as CheckBox;
+
+            pNedtell.Visible = c.Checked;
+
+            if (!c.Checked)
+                countDown = false;
+            else
+                countDown = true;
+
+            ButtonPressed(new Button() { Text = "Nullstill" }, null);
+        }
+
+        private void ButtonPressed(Object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            switch (b.Text)
+            {
+                case "Start":
+                    timer.Start();
+                    b.Text = "Stopp";
+                    form.PauseMusic();
+                    break;
+                case "Stopp":
+                    timer.Stop();
+                    b.Text = "Start";
+                    if (autoMusic.Checked)
+                        form.PlayMusic();
+
+                    break;
+                case "Nullstill":
+                    timer.Stop();
+
+                    bStart.Text = "Start";
+
+                    form.PauseMusic();
+
+                    if (!countDown)
+                        curTime = 0;
+                    else
+                        curTime = totalTime;
+
+                    PrintTime();
+
+                    break;
+            }
+        }
+
+        private void Tick(Object sender, EventArgs e)
+        {
+            if (!countDown)
+                curTime += timer.Interval;
+            else
+            {
+                if (curTime > timer.Interval)
+                    curTime -= timer.Interval;
+            }
+
+            PrintTime();
         }
 
         private void AddControls(Form formKontrol, List<Form> formPoeng)
@@ -153,46 +333,63 @@ namespace poengtavle
 
         private string GetTime(int time)
         {
-            int min = 0;
-            int sek = 0;
-            int dec = 0;
-
-            string sMin = "";
-            string sSek = "";
-            string sDec = "";
+            string ms = "" + time;
 
             string s = "";
-            string t = Convert.ToString(time);
 
-            string[] tall = new string[2];
-
-            decimal totaltime = time / 1000;
-
-            min = (int)totaltime / 60;
-            sek = (int)totaltime % 60;
-            if (decimalPlace)
+            int length = ms.Length;
+            if (length > 3)
             {
-                dec = (int)((time - (min * 60 * 1000) - (sek * 1000)) / 100);
-                sDec = Convert.ToString(dec);
+                for (int i = 0; i < length - 3; i++)
+                {
+                    s += ms[0];
+                    ms = ms.Substring(1);
+                }
+            }
+            else if (length == 3)
+            {
+                s = "0";
+                ms = Convert.ToString(ms[0]);
+            }
+            else
+            {
+                s = "0";
+                ms = "0";
             }
 
+            int sec = Convert.ToInt32(s);
+
+            int min = sec / 60;
+            sec = sec % 60;
+
+            string m = "";
+            s = "";
 
             if (min < 10)
-                sMin += "0";
-            if (sek < 10)
-                sSek += "0";
+                m += "0";
+            if (sec < 10)
+                s += "0";
 
-            sMin += Convert.ToString(min);
-            sSek += Convert.ToString(sek);
+            m += Convert.ToString(min);
+            s += Convert.ToString(sec);
 
-            s = sMin + ":" + sSek;
+            s = m + ":" + s;
 
-            if (decimalPlace)
-            {
-                s += "." + sDec;
-            }
-            
+            if (timer.Interval < 1000)
+                s += "." + ms[0];
+
+            if (min == stoppMinutter.Value && sec == stoppSekunder.Value && Convert.ToInt32(ms) == 0 && isStopp.Checked)
+                timer.Stop();
+
             return s;
+        }
+
+        private void PrintTime()
+        {
+            lVisning.Text = GetTime(curTime);
+            CenterOnXY(lVisning, new Point(width / 2, height / 2));
+            lVisningKontrol.Text = GetTime(curTime);
+            CenterOnXY(lVisningKontrol, new Point(width / 2, 8));
         }
     }
 
