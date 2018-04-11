@@ -379,7 +379,7 @@ namespace poengtavle
                 s += "." + ms[0];
 
             if (min == stoppMinutter.Value && sec == stoppSekunder.Value && Convert.ToInt32(ms) == 0 && isStopp.Checked)
-                timer.Stop();
+                ButtonPressed(new Button() { Text = "Stopp" }, null);
 
             return s;
         }
@@ -395,6 +395,125 @@ namespace poengtavle
 
     class Perioder : DataTyper
     {
+        int periode = 1;
+
+        int width = 100;
+        int height = 200;
+
+        Point pos;
+
+        public Perioder(Config config, FormControl formKontroll, List<Form> formPoeng)
+        {
+
+            pos = config.Pos;
+            if (config.Info != null)
+                periode = Convert.ToInt32(config.Info[0]);
+
+            DeclareControls(config);
+            AddControls(formKontroll, formPoeng);
+
+        }
+
+        #region Objekter
+
+        Panel pKontrol = new Panel();
+        Panel pPoeng = new Panel();
+
+        Label lTitlePer = new Label();
+        Label lPer = new Label();
+
+        Label lPeriodeKontroll = new Label();
+        Label lPeriode = new Label();
+
+        Button bPerUp = new Button();
+        Button bPerDown = new Button();
+
+        #endregion
+
+        private void DeclareControls(Config config)
+        {
+            pKontrol.Controls.Add(lPeriodeKontroll);
+            pKontrol.Controls.Add(bPerUp);
+            pKontrol.Controls.Add(lPeriode);
+            pKontrol.Controls.Add(bPerDown);
+
+            pPoeng.Controls.Add(lTitlePer);
+            pPoeng.Controls.Add(lPer);
+
+            pKontrol.Location = pos;
+            pKontrol.Size = new Size(width, height);
+            pKontrol.BorderStyle = BorderStyle.FixedSingle;
+
+            pPoeng.Location = pos;
+            pPoeng.Size = new Size(width, height);
+
+            #region Tavle
+
+            lTitlePer.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lTitlePer.AutoSize = true;
+            lTitlePer.Text = "Periode";
+            CenterOnXY(lTitlePer, new Point(width / 2, 50));
+
+            lPer.Font = new System.Drawing.Font("Arial Black", 20.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lPer.AutoSize = true;
+            lPer.Text = Convert.ToString(periode);
+            CenterOnXY(lPer, new Point(width / 2, height / 2));
+
+            #endregion
+
+            #region Kontroll
+
+            lPeriodeKontroll.AutoSize = true;
+            lPeriodeKontroll.Text = "Periode";
+            CenterOnXY(lPeriodeKontroll, new Point(width / 2, 10));
+
+            bPerUp.Text = "Opp";
+            CenterOnXY(bPerUp, new Point(width / 2, (height / 2) - 50));
+            bPerUp.Click += new EventHandler(ButtonPressed);
+
+            bPerDown.Text = "Ned";
+            CenterOnXY(bPerDown, new Point(width / 2, (height / 2) + 50));
+            bPerDown.Click += new EventHandler(ButtonPressed);
+
+            lPeriode.Text = Convert.ToString(periode);
+            lPeriode.AutoSize = true;
+            lPeriode.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            CenterOnXY(lPeriode, new Point(width / 2, height / 2));
+
+            #endregion
+
+        }
+
+        private void ButtonPressed(Object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            switch (b.Text)
+            {
+                case "Opp":
+                    periode++;
+                    break;
+                case "Ned":
+                    if (periode > 1)
+                        periode--;
+                    break;
+            }
+
+            lPeriode.Text = Convert.ToString(periode);
+            CenterOnXY(lPeriode, new Point(width / 2, height / 2));
+            lPer.Text = Convert.ToString(periode);
+            CenterOnXY(lPer, new Point(width / 2, height / 2));
+        }
+
+        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        {
+            formKontrol.Controls.Add(pKontrol);
+
+            foreach(Form f in formPoeng)
+            {
+                f.Controls.Add(pPoeng);
+            }
+        }
 
     }
 

@@ -24,13 +24,17 @@ namespace poengtavle
         List<Form> formPoeng = new List<Form>();
         List<DataTyper> controlList = new List<DataTyper>();
 
-        
+        string folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+
+        WMPLib.IWMPPlaylist playlist;
 
         
 
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+
+            playlist = mediaPlayer.playlistCollection.newPlaylist("music");
 
             mediaPlayer.URL = (System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Pegboard Nerds.mp3");
             
@@ -40,6 +44,7 @@ namespace poengtavle
             c.Add(new Config("Poeng", new Point(10, 244), new string[] { "testLag3", "2" }));
             c.Add(new Config("Poeng", new Point(450, 244), new string[] { "testLag4", "2" }));
             c.Add(new Config("Klokke", new Point(240, 244), new string[] { "0", "1000", "false" }));
+            c.Add(new Config("Perioder", new Point(680, 34), new string[] { "1" }));
             
         }
 
@@ -64,6 +69,7 @@ namespace poengtavle
                     break;
                 case "Start":
                     CreatePoengtavle(c);
+                    PlaceMusic();
                     formPoeng[0].Show();
                     pMenu.Visible = false;
                     break;                
@@ -83,8 +89,30 @@ namespace poengtavle
                     case "Poeng":
                         controlList.Add(new Poeng(d, this, formPoeng));
                         break;
+                    case "Perioder":
+                        controlList.Add(new Perioder(d, this, formPoeng));
+                        break;
                 }
             }
+        }
+
+        #region Musicplayer
+
+        private void OpenMusic(object sender, EventArgs e)
+        {
+            musicFolder.InitialDirectory = folder;
+            WMPLib.IWMPMedia media;
+
+            if (musicFolder.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string file in musicFolder.FileNames)
+                {
+                    media = mediaPlayer.newMedia(file);
+                    playlist.appendItem(media);
+                }
+            }
+            mediaPlayer.currentPlaylist = playlist;
+            mediaPlayer.Ctlcontrols.stop();
         }
 
         public void PlayMusic()
@@ -96,6 +124,25 @@ namespace poengtavle
         {
             mediaPlayer.Ctlcontrols.pause();
         }
+
+        public void PlaceMusic()
+        {
+            int my = 0;
+
+            foreach (Config conf in c)
+            {
+                if (conf.Pos.Y > my)
+                    my = conf.Pos.Y;
+            }
+
+            my += 210;
+
+            pMusic.Location = new Point(10, my);
+            pMusic.Visible = true;
+
+        }
+
+        #endregion
 
         #region Button and menu handlers
         private void ButtonPressed(object sender, EventArgs e)
@@ -110,5 +157,6 @@ namespace poengtavle
             MenuClicked(b.Text);
         }
         #endregion
+
     }
 }
