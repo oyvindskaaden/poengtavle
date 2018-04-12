@@ -16,5 +16,14 @@ namespace poengtavle
         {
             InitializeComponent();
         }
+
+        private void FormPoengtavleClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
     }
 }

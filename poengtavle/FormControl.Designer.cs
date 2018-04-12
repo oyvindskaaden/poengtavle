@@ -257,7 +257,7 @@
             this.pMusic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pMusic.Controls.Add(this.bOpenMusic);
             this.pMusic.Controls.Add(this.mediaPlayer);
-            this.pMusic.Location = new System.Drawing.Point(64, 353);
+            this.pMusic.Location = new System.Drawing.Point(12, 337);
             this.pMusic.Name = "pMusic";
             this.pMusic.Size = new System.Drawing.Size(387, 94);
             this.pMusic.TabIndex = 6;

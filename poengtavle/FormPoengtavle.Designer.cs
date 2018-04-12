@@ -41,6 +41,7 @@
             this.MaximizeBox = false;
             this.Name = "FormPoengtavle";
             this.Text = "Poengtavle";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPoengtavleClosing);
             this.ResumeLayout(false);
 
         }
