@@ -40,15 +40,22 @@ namespace poengtavle
         {
             form = formKontroll;
             pos = config.Pos;
-            totalTime = Convert.ToInt32(config.Info[0]) * 1000;
-            interval = Convert.ToInt32(config.Info[1]);
-            countDown = Convert.ToBoolean(config.Info[2]);
-            if (countDown)
-                curTime = totalTime;
 
+            if (config.Info != null)
+            {
+                if (config.Info[0] != null)
+                    totalTime = Convert.ToInt32(config.Info[0]) * 1000;
+                if (config.Info[1] != null)
+                    interval = Convert.ToInt32(config.Info[1]);
+                if (config.Info[2] != null)
+                    countDown = Convert.ToBoolean(config.Info[2]);
+                if (countDown)
+                    curTime = totalTime;
+            }
 
-            DecleareControls(config);
+            DeclareControls();
             AddControls(formKontroll, formPoeng);
+            isCountDown.Checked = countDown;
             CheckCount(new CheckBox() { Checked = countDown }, null);
         }
 
@@ -91,7 +98,9 @@ namespace poengtavle
 
         #endregion
 
-        private void DecleareControls(Config config)
+        #region Adding and declaring controls
+
+        private void DeclareControls()
         {
             pNedtell.Controls.Add(minutter);
             pNedtell.Controls.Add(sekunder);
@@ -234,6 +243,20 @@ namespace poengtavle
 
         }
 
+        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        {
+            formKontrol.Controls.Add(pKontrol);
+
+            foreach(Form f in formPoeng)
+            {
+                f.Controls.Add(pPoeng);
+            }
+        }
+
+        #endregion
+
+        #region Eventhadlers
+
         private void CheckStopp(Object sender, EventArgs e)
         {
             pStopp.Visible = isStopp.Checked;
@@ -321,15 +344,9 @@ namespace poengtavle
             PrintTime();
         }
 
-        private void AddControls(Form formKontrol, List<Form> formPoeng)
-        {
-            formKontrol.Controls.Add(pKontrol);
+        #endregion
 
-            foreach(Form f in formPoeng)
-            {
-                f.Controls.Add(pPoeng);
-            }
-        }
+        #region Private metoder
 
         private string GetTime(int time)
         {
@@ -379,7 +396,7 @@ namespace poengtavle
                 s += "." + ms[0];
 
             if (min == stoppMinutter.Value && sec == stoppSekunder.Value && Convert.ToInt32(ms) == 0 && isStopp.Checked)
-                timer.Stop();
+                ButtonPressed(new Button() { Text = "Stopp" }, null);
 
             return s;
         }
@@ -391,10 +408,131 @@ namespace poengtavle
             lVisningKontrol.Text = GetTime(curTime);
             CenterOnXY(lVisningKontrol, new Point(width / 2, 8));
         }
+
+        #endregion
     }
 
     class Perioder : DataTyper
     {
+        int periode = 1;
+
+        int width = 100;
+        int height = 200;
+
+        Point pos;
+
+        public Perioder(Config config, FormControl formKontroll, List<Form> formPoeng)
+        {
+
+            pos = config.Pos;
+            if (config.Info != null)
+                periode = Convert.ToInt32(config.Info[0]);
+
+            DeclareControls(config);
+            AddControls(formKontroll, formPoeng);
+
+        }
+
+        #region Objekter
+
+        Panel pKontrol = new Panel();
+        Panel pPoeng = new Panel();
+
+        Label lTitlePer = new Label();
+        Label lPer = new Label();
+
+        Label lPeriodeKontroll = new Label();
+        Label lPeriode = new Label();
+
+        Button bPerUp = new Button();
+        Button bPerDown = new Button();
+
+        #endregion
+
+        private void DeclareControls(Config config)
+        {
+            pKontrol.Controls.Add(lPeriodeKontroll);
+            pKontrol.Controls.Add(bPerUp);
+            pKontrol.Controls.Add(lPeriode);
+            pKontrol.Controls.Add(bPerDown);
+
+            pPoeng.Controls.Add(lTitlePer);
+            pPoeng.Controls.Add(lPer);
+
+            pKontrol.Location = pos;
+            pKontrol.Size = new Size(width, height);
+            pKontrol.BorderStyle = BorderStyle.FixedSingle;
+
+            pPoeng.Location = pos;
+            pPoeng.Size = new Size(width, height);
+
+            #region Tavle
+
+            lTitlePer.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lTitlePer.AutoSize = true;
+            lTitlePer.Text = "Periode";
+            CenterOnXY(lTitlePer, new Point(width / 2, 50));
+
+            lPer.Font = new System.Drawing.Font("Arial Black", 20.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lPer.AutoSize = true;
+            lPer.Text = Convert.ToString(periode);
+            CenterOnXY(lPer, new Point(width / 2, height / 2));
+
+            #endregion
+
+            #region Kontroll
+
+            lPeriodeKontroll.AutoSize = true;
+            lPeriodeKontroll.Text = "Periode";
+            CenterOnXY(lPeriodeKontroll, new Point(width / 2, 10));
+
+            bPerUp.Text = "Opp";
+            CenterOnXY(bPerUp, new Point(width / 2, (height / 2) - 50));
+            bPerUp.Click += new EventHandler(ButtonPressed);
+
+            bPerDown.Text = "Ned";
+            CenterOnXY(bPerDown, new Point(width / 2, (height / 2) + 50));
+            bPerDown.Click += new EventHandler(ButtonPressed);
+
+            lPeriode.Text = Convert.ToString(periode);
+            lPeriode.AutoSize = true;
+            lPeriode.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            CenterOnXY(lPeriode, new Point(width / 2, height / 2));
+
+            #endregion
+
+        }
+
+        private void ButtonPressed(Object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            switch (b.Text)
+            {
+                case "Opp":
+                    periode++;
+                    break;
+                case "Ned":
+                    if (periode > 1)
+                        periode--;
+                    break;
+            }
+
+            lPeriode.Text = Convert.ToString(periode);
+            CenterOnXY(lPeriode, new Point(width / 2, height / 2));
+            lPer.Text = Convert.ToString(periode);
+            CenterOnXY(lPer, new Point(width / 2, height / 2));
+        }
+
+        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        {
+            formKontrol.Controls.Add(pKontrol);
+
+            foreach(Form f in formPoeng)
+            {
+                f.Controls.Add(pPoeng);
+            }
+        }
 
     }
 
@@ -403,7 +541,7 @@ namespace poengtavle
 
         string navn;
         int poeng = 0;
-        int inc;
+        int inc = 1;
         Point pos;
 
         int width = 220;
@@ -433,8 +571,14 @@ namespace poengtavle
 
         public Poeng(Config config, Form formKontrol, List<Form> formPoeng)
         {
-            navn = config.Info[0];
-            inc = Convert.ToInt32(config.Info[1]);
+            if (config.Info != null)
+            {
+                if (config.Info[0] != null)
+                    navn = config.Info[0];
+                if (config.Info[1] != null)
+                    inc = Convert.ToInt32(config.Info[1]);
+            }
+
             pos = config.Pos;
 
             DeclareControls(config);
@@ -496,6 +640,7 @@ namespace poengtavle
             // Objekter for selve poengtavla
             // Navn på Lag/Spiller
             nameField.Text = navn;
+            nameField.TextAlign = ContentAlignment.MiddleCenter;
             nameField.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             nameField.MaximumSize = new Size((width / 4) * 3, 0);
             nameField.AutoEllipsis = true;
@@ -565,10 +710,168 @@ namespace poengtavle
     class Reklame : DataTyper
     {
 
-    }
+        #region Variabler
 
-    class Utvisninger
-    {
+        int width = 220;
+        int height = 200;
+        int curPic;
 
+        Point pos;
+
+        string name;
+
+        List<string> files = new List<string>();
+
+        #endregion
+
+        public Reklame(Config config, FormControl formKontrol, List<Form> formPoeng)
+        {
+            pos = config.Pos;
+            if (config.Info != null)
+                name = config.Info[0];
+
+            DeclareControls();
+            AddControls(formKontrol, formPoeng);
+        }
+
+        #region Objekter
+
+        Panel pKontrol = new Panel();
+        PictureBox pPoeng = new PictureBox();
+
+        Label lTitle = new Label();
+        TextBox tName = new TextBox();
+        Button bStartAd = new Button();
+        Label lOpen = new Label();
+        Button bOpen = new Button();
+
+        OpenFileDialog adFiles = new OpenFileDialog();
+        Timer timer = new Timer();
+
+        #endregion
+
+        #region Adding and declaring controls
+
+        private void DeclareControls()
+        {
+            pKontrol.Controls.Add(lTitle);
+            pKontrol.Controls.Add(tName);
+            pKontrol.Controls.Add(bStartAd);
+            pKontrol.Controls.Add(lOpen);
+            pKontrol.Controls.Add(bOpen);
+
+            pKontrol.Location = pos;
+            pKontrol.Size = new Size(width, height);
+            pKontrol.BorderStyle = BorderStyle.FixedSingle;
+
+            #region Poengtavlen
+
+            pPoeng.Dock = DockStyle.Fill;
+            pPoeng.SizeMode = PictureBoxSizeMode.Zoom;
+            pPoeng.Visible = false;
+
+            #endregion
+
+            #region Kontrollpanel
+
+            lTitle.Location = new Point(22, 16);
+            lTitle.Text = "Navn på reklame (for referanse)";
+            lTitle.AutoSize = true;
+
+            tName.Text = name;
+            tName.Size = new Size(172, 20);
+            CenterOnXY(tName, new Point(width / 2, 32 + (tName.Height / 2)));
+
+            bStartAd.Size = new Size(172, 23);
+            bStartAd.Text = "Start reklame";
+            CenterOnXY(bStartAd, new Point(width / 2, 58 + (bStartAd.Height / 2)));
+            bStartAd.Click += new EventHandler(StartAd);
+
+            lOpen.Location = new Point(22, 115);
+            lOpen.Text = "Åpne reklamebilder";
+            lOpen.AutoSize = true;
+
+            
+            bOpen.Size = new Size(172, 23);
+            bOpen.Text = "Åpne reklamebilder";
+            CenterOnXY(bOpen, new Point(width / 2, 131 + (bOpen.Height / 2)));
+            bOpen.Click += new EventHandler(OpenFiles);
+
+            #endregion
+
+            #region Fil og timer
+
+            adFiles.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
+            adFiles.Multiselect = true;
+            adFiles.Title = "Åpne reklamebilder";
+
+            timer.Interval = 12000;
+            timer.Tick += new EventHandler(ChangePicture);
+
+            #endregion
+
+        }
+
+        private void AddControls(FormControl formKontrol, List<Form> formPoeng)
+        {
+            formKontrol.Controls.Add(pKontrol);
+
+            foreach(Form f in formPoeng)
+            {
+                f.Controls.Add(pPoeng);
+            }
+        }
+
+        #endregion
+
+        #region Eventhandlers
+
+        private void StartAd(Object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            switch (b.Text)
+            {
+                case "Start reklame":
+                    b.Text = "Stopp reklame";
+                    pPoeng.Visible = true;
+                    pPoeng.BringToFront();
+                    timer.Start();
+                    break;
+                case "Stopp reklame":
+                    b.Text = "Start reklame";
+                    pPoeng.Visible = false;
+                    timer.Stop();
+                    break;
+            }
+        }
+
+        private void OpenFiles(Object sender, EventArgs e)
+        {
+            files.Clear();
+
+            if (adFiles.ShowDialog() == DialogResult.OK)
+            {
+                files.AddRange(adFiles.FileNames);
+                pPoeng.ImageLocation = files[0];
+                pPoeng.Load();
+            }
+
+
+        }
+
+        private void ChangePicture(Object sender, EventArgs e)
+        {
+            curPic++;
+            if (curPic >= files.Count)
+                curPic = 0;
+
+            pPoeng.ImageLocation = files[curPic];
+            //pPoeng.Refresh();
+            pPoeng.Load();
+
+        }
+
+        #endregion
     }
 }

@@ -36,11 +36,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(821, 538);
+            this.ClientSize = new System.Drawing.Size(626, 291);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormPoengtavle";
             this.Text = "Poengtavle";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPoengtavleClosing);
             this.ResumeLayout(false);
 
         }
