@@ -25,5 +25,21 @@ namespace poengtavle
                 Hide();
             }
         }
+
+        private void CenterOnXY()
+        {
+            this.MinimumSize = poengPanel.Size;
+            poengPanel.Location = new Point((this.Width / 2) - (poengPanel.Width / 2), (this.Height / 2) - (poengPanel.Height / 2));
+        }
+
+        private void MovePanel(object sender, EventArgs e)
+        {
+            CenterOnXY();
+        }
+
+        private void MovePanelPanel(object sender, ControlEventArgs e)
+        {
+            CenterOnXY();
+        }
     }
 }

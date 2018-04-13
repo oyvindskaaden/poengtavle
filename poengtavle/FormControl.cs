@@ -21,7 +21,7 @@ namespace poengtavle
 
         LoadFunc lf = new LoadFunc();
 
-        List<Form> formPoeng = new List<Form>();
+        List<FormPoengtavle> formPoeng = new List<FormPoengtavle>();
         List<DataTyper> controlList = new List<DataTyper>();
 
         string folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);

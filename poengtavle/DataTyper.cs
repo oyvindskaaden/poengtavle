@@ -36,7 +36,7 @@ namespace poengtavle
 
         #endregion
 
-        public Klokke(Config config, FormControl formKontroll, List<Form> formPoeng)
+        public Klokke(Config config, FormControl formKontroll, List<FormPoengtavle> formPoeng)
         {
             form = formKontroll;
             pos = config.Pos;
@@ -243,13 +243,13 @@ namespace poengtavle
 
         }
 
-        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        private void AddControls(Form formKontrol, List<FormPoengtavle> formPoeng)
         {
             formKontrol.Controls.Add(pKontrol);
 
-            foreach(Form f in formPoeng)
+            foreach(FormPoengtavle f in formPoeng)
             {
-                f.Controls.Add(pPoeng);
+                f.poengPanel.Controls.Add(pPoeng);
             }
         }
 
@@ -421,7 +421,7 @@ namespace poengtavle
 
         Point pos;
 
-        public Perioder(Config config, FormControl formKontroll, List<Form> formPoeng)
+        public Perioder(Config config, FormControl formKontroll, List<FormPoengtavle> formPoeng)
         {
 
             pos = config.Pos;
@@ -524,13 +524,13 @@ namespace poengtavle
             CenterOnXY(lPer, new Point(width / 2, height / 2));
         }
 
-        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        private void AddControls(Form formKontrol, List<FormPoengtavle> formPoeng)
         {
             formKontrol.Controls.Add(pKontrol);
 
-            foreach(Form f in formPoeng)
+            foreach(FormPoengtavle f in formPoeng)
             {
-                f.Controls.Add(pPoeng);
+                f.poengPanel.Controls.Add(pPoeng);
             }
         }
 
@@ -539,6 +539,8 @@ namespace poengtavle
     class Poeng : DataTyper
     {
 
+        #region Variabler
+
         string navn;
         int poeng = 0;
         int inc = 1;
@@ -546,6 +548,13 @@ namespace poengtavle
 
         int width = 220;
         int height = 200;
+
+        string buttonInc = "Poeng opp";
+        string buttonDinc = "Poeng ned";
+
+        #endregion
+
+        #region Objekter
 
         Panel pKontrol = new Panel();
         Panel pPoeng = new Panel();
@@ -566,10 +575,9 @@ namespace poengtavle
         Button bInc = new Button();
         Button bDinc = new Button();
 
-        string buttonInc = "Poeng opp";
-        string buttonDinc = "Poeng ned";
+        #endregion
 
-        public Poeng(Config config, Form formKontrol, List<Form> formPoeng)
+        public Poeng(Config config, Form formKontrol, List<FormPoengtavle> formPoeng)
         {
             if (config.Info != null)
             {
@@ -588,6 +596,8 @@ namespace poengtavle
 
         private void DeclareControls(Config config)
         {
+            #region Adding child controls
+
             pPoeng.Controls.Add(nameField);
             pPoeng.Controls.Add(sum);
 
@@ -600,6 +610,8 @@ namespace poengtavle
             pKontrol.Controls.Add(bSubName);
             pKontrol.Controls.Add(incTitle);
             pKontrol.Controls.Add(increment);
+
+            #endregion
 
             pKontrol.Size = new Size(width, height);
             pKontrol.Location = pos;
@@ -684,7 +696,7 @@ namespace poengtavle
             CenterOnXY(lKontolPoint, new Point(width / 2, 35));
         }
 
-        private void AddControls(Form formKontrol, List<Form> formPoeng)
+        private void AddControls(Form formKontrol, List<FormPoengtavle> formPoeng)
         {
             bInc.Click += new EventHandler(ButtonPress);
             bDinc.Click += new EventHandler(ButtonPress);
@@ -694,9 +706,9 @@ namespace poengtavle
 
             formKontrol.Controls.Add(pKontrol);
 
-            foreach(Form f in formPoeng)
+            foreach(FormPoengtavle f in formPoeng)
             {
-                f.Controls.Add(pPoeng);
+                f.poengPanel.Controls.Add(pPoeng);
             }
         }
 
@@ -724,7 +736,7 @@ namespace poengtavle
 
         #endregion
 
-        public Reklame(Config config, FormControl formKontrol, List<Form> formPoeng)
+        public Reklame(Config config, FormControl formKontrol, List<FormPoengtavle> formPoeng)
         {
             pos = config.Pos;
             if (config.Info != null)
@@ -812,13 +824,13 @@ namespace poengtavle
 
         }
 
-        private void AddControls(FormControl formKontrol, List<Form> formPoeng)
+        private void AddControls(FormControl formKontrol, List<FormPoengtavle> formPoeng)
         {
             formKontrol.Controls.Add(pKontrol);
 
-            foreach(Form f in formPoeng)
+            foreach(FormPoengtavle f in formPoeng)
             {
-                f.Controls.Add(pPoeng);
+                f.poengPanel.Controls.Add(pPoeng);
             }
         }
 
@@ -856,8 +868,6 @@ namespace poengtavle
                 pPoeng.ImageLocation = files[0];
                 pPoeng.Load();
             }
-
-
         }
 
         private void ChangePicture(Object sender, EventArgs e)
@@ -867,9 +877,7 @@ namespace poengtavle
                 curPic = 0;
 
             pPoeng.ImageLocation = files[curPic];
-            //pPoeng.Refresh();
             pPoeng.Load();
-
         }
 
         #endregion
