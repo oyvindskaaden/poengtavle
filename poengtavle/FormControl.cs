@@ -23,21 +23,22 @@ namespace poengtavle
 
         List<FormPoengtavle> formPoeng = new List<FormPoengtavle>();
         List<DataTyper> controlList = new List<DataTyper>();
+        List<Layout> layoutList = new List<Layout>();
 
         string folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
 
         WMPLib.IWMPPlaylist playlist;
 
-        
-
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
-
+            layoutList.Add(new Layout(this, "Poeng"));
+            layoutList.Add(new Layout(this, "Klokke"));
+            layoutList.Add(new Layout(this, "Perioder"));
+            layoutList.Add(new Layout(this, "Reklame"));
             playlist = mediaPlayer.playlistCollection.newPlaylist("music");
 
-            //mediaPlayer.URL = (System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Pegboard Nerds.mp3");
-            
+            /*
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
             c.Add(new Config("Klokke", new Point(240, 34), new string[] { "5400", "100", "false" }));
@@ -46,7 +47,17 @@ namespace poengtavle
             c.Add(new Config("Klokke", new Point(240, 244), new string[] { "0", "1000", "true" }));
             c.Add(new Config("Perioder", new Point(680, 34), new string[] { "1" }));
             c.Add(new Config("Reklame", new Point(680, 244), null));
-            
+            */
+            /*
+            c.Add(new Config("Poeng", new Point(10, 34), null));
+            c.Add(new Config("Poeng", new Point(450, 34), null));
+            c.Add(new Config("Klokke", new Point(240, 34), null));
+            c.Add(new Config("Poeng", new Point(10, 244), null));
+            c.Add(new Config("Poeng", new Point(450, 244), null));
+            c.Add(new Config("Klokke", new Point(240, 244), null));
+            c.Add(new Config("Perioder", new Point(680, 34), null));
+            c.Add(new Config("Reklame", new Point(680, 244), null));
+            */
         }
 
         private void MenuClicked(string s)
@@ -69,10 +80,14 @@ namespace poengtavle
                     //formPoeng[1].Show();
                     break;
                 case "Start":
+                    GetConfig();
                     CreatePoengtavle(c);
                     PlaceMusic();
                     formPoeng[0].Show();
                     pMenu.Visible = false;
+                    configPanel.Visible = false;
+                    kontrolPanel.Dock = DockStyle.Fill;
+                    kontrolPanel.Visible = true;
                     break;                
             }
 
@@ -97,6 +112,14 @@ namespace poengtavle
                         controlList.Add(new Reklame(d, this, formPoeng));
                         break;
                 }
+            }
+        }
+
+        public void GetConfig()
+        {
+            foreach (Layout l in layoutList)
+            {
+                c.Add(l.GetConfig());
             }
         }
 
@@ -143,8 +166,8 @@ namespace poengtavle
             my += 210;
 
             pMusic.Location = new Point(10, my);
+            kontrolPanel.Controls.Add(pMusic);
             pMusic.Visible = true;
-
         }
 
         #endregion

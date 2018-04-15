@@ -55,6 +55,8 @@
             this.pMusic = new System.Windows.Forms.Panel();
             this.bOpenMusic = new System.Windows.Forms.Button();
             this.musicFolder = new System.Windows.Forms.OpenFileDialog();
+            this.configPanel = new System.Windows.Forms.Panel();
+            this.kontrolPanel = new System.Windows.Forms.Panel();
             this.menuStripStd.SuspendLayout();
             this.pMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mediaPlayer)).BeginInit();
@@ -87,7 +89,7 @@
             // 
             this.lagreToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lagreToolStripMenuItem.Name = "lagreToolStripMenuItem";
-            this.lagreToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.lagreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lagreToolStripMenuItem.Text = "Lagre";
             this.lagreToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -95,7 +97,7 @@
             // 
             this.åpneToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.åpneToolStripMenuItem.Name = "åpneToolStripMenuItem";
-            this.åpneToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.åpneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.åpneToolStripMenuItem.Text = "Åpne";
             this.åpneToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -114,7 +116,7 @@
             // 
             this.poengtavleToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.poengtavleToolStripMenuItem2.Name = "poengtavleToolStripMenuItem2";
-            this.poengtavleToolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
+            this.poengtavleToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.poengtavleToolStripMenuItem2.Text = "Poengtavle";
             this.poengtavleToolStripMenuItem2.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -122,7 +124,7 @@
             // 
             this.fraMalToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.fraMalToolStripMenuItem1.Name = "fraMalToolStripMenuItem1";
-            this.fraMalToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
+            this.fraMalToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.fraMalToolStripMenuItem1.Text = "Fra mal";
             this.fraMalToolStripMenuItem1.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -130,7 +132,7 @@
             // 
             this.malToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.malToolStripMenuItem1.Name = "malToolStripMenuItem1";
-            this.malToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
+            this.malToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.malToolStripMenuItem1.Text = "Mal";
             this.malToolStripMenuItem1.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -147,7 +149,7 @@
             // 
             this.startFullskjermToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startFullskjermToolStripMenuItem.Name = "startFullskjermToolStripMenuItem";
-            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startFullskjermToolStripMenuItem.Text = "Start";
             this.startFullskjermToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -257,7 +259,7 @@
             this.pMusic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pMusic.Controls.Add(this.bOpenMusic);
             this.pMusic.Controls.Add(this.mediaPlayer);
-            this.pMusic.Location = new System.Drawing.Point(12, 337);
+            this.pMusic.Location = new System.Drawing.Point(8, 337);
             this.pMusic.Name = "pMusic";
             this.pMusic.Size = new System.Drawing.Size(387, 94);
             this.pMusic.TabIndex = 6;
@@ -278,6 +280,26 @@
             this.musicFolder.Filter = "Music files|*.mp3|All files|*.*";
             this.musicFolder.Multiselect = true;
             // 
+            // configPanel
+            // 
+            this.configPanel.AutoSize = true;
+            this.configPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.configPanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.configPanel.Location = new System.Drawing.Point(146, 453);
+            this.configPanel.Name = "configPanel";
+            this.configPanel.Size = new System.Drawing.Size(0, 0);
+            this.configPanel.TabIndex = 7;
+            // 
+            // kontrolPanel
+            // 
+            this.kontrolPanel.AutoSize = true;
+            this.kontrolPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.kontrolPanel.Location = new System.Drawing.Point(79, 453);
+            this.kontrolPanel.Name = "kontrolPanel";
+            this.kontrolPanel.Size = new System.Drawing.Size(0, 0);
+            this.kontrolPanel.TabIndex = 8;
+            this.kontrolPanel.Visible = false;
+            // 
             // FormControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -285,6 +307,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(953, 671);
+            this.Controls.Add(this.kontrolPanel);
+            this.Controls.Add(this.configPanel);
             this.Controls.Add(this.pMusic);
             this.Controls.Add(this.pMenu);
             this.Controls.Add(this.menuStripStd);
@@ -332,6 +356,8 @@
         private System.Windows.Forms.Panel pMusic;
         private System.Windows.Forms.Button bOpenMusic;
         private System.Windows.Forms.OpenFileDialog musicFolder;
+        public System.Windows.Forms.Panel configPanel;
+        public System.Windows.Forms.Panel kontrolPanel;
     }
 }
 
