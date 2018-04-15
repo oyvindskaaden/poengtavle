@@ -17,6 +17,11 @@ namespace poengtavle
         {
             InitializeComponent();
         }
+
+        #region Variabler
+
+        int number = 0;
+
         List<Config> c = new List<Config>();
 
         LoadFunc lf = new LoadFunc();
@@ -30,17 +35,21 @@ namespace poengtavle
 
         WMPLib.IWMPPlaylist playlist;
 
+        #endregion
+
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+            playlist = mediaPlayer.playlistCollection.newPlaylist("music");
+
+            #region Test
+
             /*
             layoutList.Add(new Layout(this, "Poeng"));
             layoutList.Add(new Layout(this, "Klokke"));
             layoutList.Add(new Layout(this, "Perioder"));
             layoutList.Add(new Layout(this, "Reklame"));
             */
-            playlist = mediaPlayer.playlistCollection.newPlaylist("music");
-
             /*
             c.Add(new Config("Poeng", new Point(10, 34), new string[] { "Testlag1", "1"}));
             c.Add(new Config("Poeng", new Point(450, 34), new string[] { "Testlag2", "1"}));
@@ -61,7 +70,11 @@ namespace poengtavle
             c.Add(new Config("Perioder", new Point(680, 34), null));
             c.Add(new Config("Reklame", new Point(680, 244), null));
             */
+
+            #endregion
         }
+
+        #region Creation of poengtavle
 
         private void MenuClicked(string s)
         {
@@ -125,6 +138,10 @@ namespace poengtavle
             }
         }
 
+        #endregion
+
+        #region Load and Save
+
         private void LoadConfigFromFile()
         {
             ClearPanels();
@@ -153,6 +170,7 @@ namespace poengtavle
             }
         }
 
+        #endregion
 
         #region Musicplayer
 
@@ -217,12 +235,13 @@ namespace poengtavle
         }
         #endregion
 
+        #region Layout-creator
+
         private void StartLayout(bool temp)
         {
             ClearLayout();
             startFullskjermToolStripMenuItem.Enabled = !temp;
-            //layoutPanel.Dock = DockStyle.Fill;
-            layoutPanel.Location = new Point(4, 27);
+            layoutPanel.Location = new Point(3, 27);
             pMenu.Visible = false;
             kontrolPanel.Visible = false;
             layoutPanel.Visible = true;
@@ -238,18 +257,23 @@ namespace poengtavle
 
         private void ConfigBtClick(object sender, EventArgs e)
         {
+
             Button b = sender as Button;
 
-            layoutList.Add(new Layout(this, b.Text));
+            layoutList.Add(new Layout(this, b.Text, number));
+            number++;
         }
 
         private void ClearLayout()
         {
+            number = 0;
             foreach (Layout l in layoutList)
             {
                 l.Dispose();
             }
             layoutList.Clear();
         }
+
+        #endregion
     }
 }

@@ -372,8 +372,8 @@
             // layoutPanel
             // 
             this.layoutPanel.AutoSize = true;
-            this.layoutPanel.Controls.Add(this.panel1);
             this.layoutPanel.Controls.Add(this.configPanel);
+            this.layoutPanel.Controls.Add(this.panel1);
             this.layoutPanel.Location = new System.Drawing.Point(453, 210);
             this.layoutPanel.Name = "layoutPanel";
             this.layoutPanel.Size = new System.Drawing.Size(734, 544);

@@ -10,48 +10,37 @@ namespace poengtavle
 {
     class Layout : Panel
     {
-
+        #region Variabler
         string type;
+        int number;
 
         private Point MouseDownLocation;
 
+        #endregion
+
         public Layout() { }
 
-        public Layout(FormControl form, string t)
+        public Layout(FormControl form, string t, int n)
         {
             type = t;
+            number = n;
             DeclareControls(GetSize(t));
             AddControls(form);
         }
 
-        public Config GetConfig() { return new Config(type, this.Location, null); }
-
-        private Size GetSize(string t)
-        {
-            Size size = new Size();
-            switch (t)
-            {
-                case "Klokke":
-                    size = new Size(200, 200);
-                    break;
-                case "Poeng":
-                case "Reklame":
-                    size = new Size(220, 200);
-                    break;
-                case "Perioder":
-                    size = new Size(100, 200);
-                    break;
-            }
-            return size;
-        }
+        #region Objekter
 
         Label title = new Label();
+
+        #endregion
+
+        #region Adding and Declaring controls
 
         private void DeclareControls(Size s)
         {
             this.Controls.Add(title);
 
-            this.Location = new Point(10, 10);
+            this.Location = new Point(10 + number * 5, 10 + number * 5);
             this.Size = s;
             this.BorderStyle = BorderStyle.FixedSingle;
             this.BackColor = SystemColors.Control;
@@ -68,6 +57,10 @@ namespace poengtavle
             form.configPanel.Controls.Add(this);
             this.BringToFront();
         }
+
+        #endregion
+
+        #region Eventhandlers
 
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -88,10 +81,41 @@ namespace poengtavle
             }
         }
 
+        #endregion
+
+        #region Private-metoder
+
+        private Size GetSize(string t)
+        {
+            Size size = new Size();
+            switch (t)
+            {
+                case "Klokke":
+                    size = new Size(200, 200);
+                    break;
+                case "Poeng":
+                case "Reklame":
+                    size = new Size(220, 200);
+                    break;
+                case "Perioder":
+                    size = new Size(100, 200);
+                    break;
+            }
+            return size;
+        }
+
+        #endregion
+
+        #region Public-metoder
+
         public void CenterOnXY(Control c, Point p)
         {
             c.Location = new Point(p.X - (c.Width / 2), p.Y - (c.Height / 2));
         }
+
+        public Config GetConfig() { return new Config(type, this.Location, null); }
+
+        #endregion
 
     }
 }
