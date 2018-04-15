@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Drawing;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace poengtavle
 {
