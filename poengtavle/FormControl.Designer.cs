@@ -57,10 +57,20 @@
             this.musicFolder = new System.Windows.Forms.OpenFileDialog();
             this.configPanel = new System.Windows.Forms.Panel();
             this.kontrolPanel = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.layoutPanel = new System.Windows.Forms.Panel();
+            this.saveConfigDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openConfigDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStripStd.SuspendLayout();
             this.pMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mediaPlayer)).BeginInit();
             this.pMusic.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.layoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripStd
@@ -71,7 +81,7 @@
             this.poengtavleToolStripMenuItem1});
             this.menuStripStd.Location = new System.Drawing.Point(0, 0);
             this.menuStripStd.Name = "menuStripStd";
-            this.menuStripStd.Size = new System.Drawing.Size(953, 24);
+            this.menuStripStd.Size = new System.Drawing.Size(1395, 24);
             this.menuStripStd.TabIndex = 0;
             this.menuStripStd.Text = "meny";
             // 
@@ -125,12 +135,13 @@
             this.fraMalToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.fraMalToolStripMenuItem1.Name = "fraMalToolStripMenuItem1";
             this.fraMalToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.fraMalToolStripMenuItem1.Text = "Fra mal";
+            this.fraMalToolStripMenuItem1.Text = "Fra fil";
             this.fraMalToolStripMenuItem1.Click += new System.EventHandler(this.MenuClicked);
             // 
             // malToolStripMenuItem1
             // 
             this.malToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.malToolStripMenuItem1.Enabled = false;
             this.malToolStripMenuItem1.Name = "malToolStripMenuItem1";
             this.malToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.malToolStripMenuItem1.Text = "Mal";
@@ -148,6 +159,7 @@
             // startFullskjermToolStripMenuItem
             // 
             this.startFullskjermToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.startFullskjermToolStripMenuItem.Enabled = false;
             this.startFullskjermToolStripMenuItem.Name = "startFullskjermToolStripMenuItem";
             this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startFullskjermToolStripMenuItem.Text = "Start";
@@ -216,6 +228,7 @@
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(274, 111);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
@@ -226,6 +239,7 @@
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(67, 169);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
@@ -240,7 +254,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
-            this.button2.Text = "Fra mal";
+            this.button2.Text = "Fra fil";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.ButtonPressed);
             // 
@@ -259,7 +273,7 @@
             this.pMusic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pMusic.Controls.Add(this.bOpenMusic);
             this.pMusic.Controls.Add(this.mediaPlayer);
-            this.pMusic.Location = new System.Drawing.Point(8, 337);
+            this.pMusic.Location = new System.Drawing.Point(12, 353);
             this.pMusic.Name = "pMusic";
             this.pMusic.Size = new System.Drawing.Size(387, 94);
             this.pMusic.TabIndex = 6;
@@ -285,20 +299,96 @@
             this.configPanel.AutoSize = true;
             this.configPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.configPanel.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.configPanel.Location = new System.Drawing.Point(146, 453);
+            this.configPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.configPanel.Location = new System.Drawing.Point(0, 0);
             this.configPanel.Name = "configPanel";
-            this.configPanel.Size = new System.Drawing.Size(0, 0);
+            this.configPanel.Size = new System.Drawing.Size(734, 544);
             this.configPanel.TabIndex = 7;
             // 
             // kontrolPanel
             // 
             this.kontrolPanel.AutoSize = true;
             this.kontrolPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.kontrolPanel.Location = new System.Drawing.Point(79, 453);
+            this.kontrolPanel.Location = new System.Drawing.Point(87, 453);
             this.kontrolPanel.Name = "kontrolPanel";
             this.kontrolPanel.Size = new System.Drawing.Size(0, 0);
             this.kontrolPanel.TabIndex = 8;
             this.kontrolPanel.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.button8);
+            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.button5);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(648, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(86, 544);
+            this.panel1.TabIndex = 0;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(4, 4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "Poeng";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.ConfigBtClick);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(4, 33);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Klokke";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.ConfigBtClick);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(4, 62);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 2;
+            this.button7.Text = "Perioder";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.ConfigBtClick);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(4, 91);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 3;
+            this.button8.Text = "Reklame";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.ConfigBtClick);
+            // 
+            // layoutPanel
+            // 
+            this.layoutPanel.AutoSize = true;
+            this.layoutPanel.Controls.Add(this.panel1);
+            this.layoutPanel.Controls.Add(this.configPanel);
+            this.layoutPanel.Location = new System.Drawing.Point(453, 210);
+            this.layoutPanel.Name = "layoutPanel";
+            this.layoutPanel.Size = new System.Drawing.Size(734, 544);
+            this.layoutPanel.TabIndex = 9;
+            this.layoutPanel.Visible = false;
+            // 
+            // saveConfigDialog
+            // 
+            this.saveConfigDialog.Filter = "Poengtavle-filer|*.ptc";
+            this.saveConfigDialog.Title = "Lagre poengtavle";
+            // 
+            // openConfigDialog
+            // 
+            this.openConfigDialog.Filter = "Poengtavle-filer|*.ptc|Alle filer|*.*";
+            this.openConfigDialog.Title = "Åpne poengtavle";
             // 
             // FormControl
             // 
@@ -306,9 +396,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(953, 671);
+            this.ClientSize = new System.Drawing.Size(1395, 817);
+            this.Controls.Add(this.layoutPanel);
             this.Controls.Add(this.kontrolPanel);
-            this.Controls.Add(this.configPanel);
             this.Controls.Add(this.pMusic);
             this.Controls.Add(this.pMenu);
             this.Controls.Add(this.menuStripStd);
@@ -324,6 +414,9 @@
             this.pMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mediaPlayer)).EndInit();
             this.pMusic.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.layoutPanel.ResumeLayout(false);
+            this.layoutPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,6 +451,14 @@
         private System.Windows.Forms.OpenFileDialog musicFolder;
         public System.Windows.Forms.Panel configPanel;
         public System.Windows.Forms.Panel kontrolPanel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Panel layoutPanel;
+        private System.Windows.Forms.SaveFileDialog saveConfigDialog;
+        private System.Windows.Forms.OpenFileDialog openConfigDialog;
     }
 }
 

@@ -25,17 +25,20 @@ namespace poengtavle
         List<DataTyper> controlList = new List<DataTyper>();
         List<Layout> layoutList = new List<Layout>();
 
-        string folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+        string folder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+        string defaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         WMPLib.IWMPPlaylist playlist;
 
         private void FormControl_Load(object sender, EventArgs e)
         {
             formPoeng.Add(new FormPoengtavle());
+            /*
             layoutList.Add(new Layout(this, "Poeng"));
             layoutList.Add(new Layout(this, "Klokke"));
             layoutList.Add(new Layout(this, "Perioder"));
             layoutList.Add(new Layout(this, "Reklame"));
+            */
             playlist = mediaPlayer.playlistCollection.newPlaylist("music");
 
             /*
@@ -66,17 +69,24 @@ namespace poengtavle
             {
                 case "Ny":
                 case "Poengtavle":
-                    break;
-                case "Fra mal":
+                    c.Clear();
+                    ClearPanels();
+                    StartLayout(false);
+                    foreach (FormPoengtavle f in formPoeng)
+                    {
+                        f.Hide();
+                    }
                     break;
                 case "Mal":
                 case "Ny mal":
+                    StartLayout(true);
                     break;
                 case "Lagre":
-                    lf.WriteJSON(c, System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\test.json");
+                    SaveConfig();
                     break;
+                case "Fra fil":
                 case "Åpne":
-                    c = lf.ReadJSONtoObject(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\test.json");
+                    LoadConfigFromFile();
                     //formPoeng[1].Show();
                     break;
                 case "Start":
@@ -85,7 +95,7 @@ namespace poengtavle
                     PlaceMusic();
                     formPoeng[0].Show();
                     pMenu.Visible = false;
-                    configPanel.Visible = false;
+                    layoutPanel.Visible = false;
                     kontrolPanel.Dock = DockStyle.Fill;
                     kontrolPanel.Visible = true;
                     break;                
@@ -115,13 +125,34 @@ namespace poengtavle
             }
         }
 
-        public void GetConfig()
+        private void LoadConfigFromFile()
         {
-            foreach (Layout l in layoutList)
+            ClearPanels();
+            openConfigDialog.InitialDirectory = defaultFolder;
+            if (openConfigDialog.ShowDialog() == DialogResult.OK)
             {
-                c.Add(l.GetConfig());
+                c = lf.ReadJSONtoObject(openConfigDialog.FileName);
+                startFullskjermToolStripMenuItem.Enabled = true;
             }
         }
+
+        private void ClearPanels()
+        {
+            foreach (DataTyper d in controlList)
+            {
+                d.Dispose();
+            }
+            controlList.Clear();
+        }
+
+        private void SaveConfig()
+        {
+            if (saveConfigDialog.ShowDialog() == DialogResult.OK)
+            {
+                lf.WriteJSON(c, saveConfigDialog.FileName);
+            }
+        }
+
 
         #region Musicplayer
 
@@ -186,5 +217,39 @@ namespace poengtavle
         }
         #endregion
 
+        private void StartLayout(bool temp)
+        {
+            ClearLayout();
+            startFullskjermToolStripMenuItem.Enabled = !temp;
+            //layoutPanel.Dock = DockStyle.Fill;
+            layoutPanel.Location = new Point(4, 27);
+            pMenu.Visible = false;
+            kontrolPanel.Visible = false;
+            layoutPanel.Visible = true;
+        }
+
+        public void GetConfig()
+        {
+            foreach (Layout l in layoutList)
+            {
+                c.Add(l.GetConfig());
+            }
+        }
+
+        private void ConfigBtClick(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            layoutList.Add(new Layout(this, b.Text));
+        }
+
+        private void ClearLayout()
+        {
+            foreach (Layout l in layoutList)
+            {
+                l.Dispose();
+            }
+            layoutList.Clear();
+        }
     }
 }

@@ -10,11 +10,21 @@ namespace poengtavle
 {
     class DataTyper
     {
+
+        public Panel pKontrol = new Panel();
+        public Panel pPoeng = new Panel();
+
         public DataTyper() { }
 
         public void CenterOnXY(Control c, Point p)
         {
             c.Location = new Point(p.X - (c.Width / 2), p.Y - (c.Height / 2));
+        }
+
+        public void Dispose()
+        {
+            pKontrol.Dispose();
+            pPoeng.Dispose();
         }
     }
 
@@ -60,9 +70,6 @@ namespace poengtavle
         }
 
         #region Objekter
-
-        Panel pKontrol = new Panel();
-        Panel pPoeng = new Panel();
 
         Timer timer = new Timer();
 
@@ -410,6 +417,7 @@ namespace poengtavle
         }
 
         #endregion
+
     }
 
     class Perioder : DataTyper
@@ -438,9 +446,6 @@ namespace poengtavle
         }
 
         #region Objekter
-
-        Panel pKontrol = new Panel();
-        Panel pPoeng = new Panel();
 
         Label lTitlePer = new Label();
         Label lPer = new Label();
@@ -549,6 +554,7 @@ namespace poengtavle
         }
 
         #endregion
+
     }
 
     class Poeng : DataTyper
@@ -586,9 +592,6 @@ namespace poengtavle
         }
 
         #region Objekter
-
-        Panel pKontrol = new Panel();
-        Panel pPoeng = new Panel();
 
         Label nameField = new Label();
         Label sum = new Label();
@@ -671,6 +674,7 @@ namespace poengtavle
             incTitle.Text = "Poengøkning:";
 
             increment.Location = new Point(7, 166);
+            increment.Minimum = 1;
             increment.Value = inc;
             increment.ReadOnly = true;
             increment.ValueChanged += new EventHandler(IncChanged);
@@ -743,14 +747,6 @@ namespace poengtavle
 
         #endregion
 
-        #region Public-metoder
-
-        public Config GetConfig()
-        {
-            return new Config("Poeng", pos, new string[] { navn, Convert.ToString(inc) });
-        }
-
-        #endregion
     }
 
     class Reklame : DataTyper
@@ -781,8 +777,7 @@ namespace poengtavle
 
         #region Objekter
 
-        Panel pKontrol = new Panel();
-        PictureBox pPoeng = new PictureBox();
+        PictureBox pPicPoeng = new PictureBox();
 
         Label lTitle = new Label();
         TextBox tName = new TextBox();
@@ -811,9 +806,12 @@ namespace poengtavle
 
             #region Poengtavlen
 
+            pPoeng.Controls.Add(pPicPoeng);
             pPoeng.Dock = DockStyle.Fill;
-            pPoeng.SizeMode = PictureBoxSizeMode.Zoom;
             pPoeng.Visible = false;
+
+            pPicPoeng.Dock = DockStyle.Fill;
+            pPicPoeng.SizeMode = PictureBoxSizeMode.Zoom;
 
             #endregion
 
@@ -898,8 +896,8 @@ namespace poengtavle
             if (adFiles.ShowDialog() == DialogResult.OK)
             {
                 files.AddRange(adFiles.FileNames);
-                pPoeng.ImageLocation = files[0];
-                pPoeng.Load();
+                pPicPoeng.ImageLocation = files[0];
+                pPicPoeng.Load();
             }
         }
 
@@ -909,10 +907,11 @@ namespace poengtavle
             if (curPic >= files.Count)
                 curPic = 0;
 
-            pPoeng.ImageLocation = files[curPic];
-            pPoeng.Load();
+            pPicPoeng.ImageLocation = files[curPic];
+            pPicPoeng.Load();
         }
 
         #endregion
+
     }
 }

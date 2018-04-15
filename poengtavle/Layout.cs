@@ -66,6 +66,7 @@ namespace poengtavle
         private void AddControls(FormControl form)
         {
             form.configPanel.Controls.Add(this);
+            this.BringToFront();
         }
 
         private void Panel_MouseDown(object sender, MouseEventArgs e)
@@ -73,6 +74,7 @@ namespace poengtavle
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 MouseDownLocation = e.Location;
+                this.BringToFront();
             }
         }
 
@@ -82,6 +84,7 @@ namespace poengtavle
             {
                 this.Left = e.X + this.Left - MouseDownLocation.X;
                 this.Top = e.Y + this.Top - MouseDownLocation.Y;
+                this.BringToFront();
             }
         }
 
@@ -89,5 +92,6 @@ namespace poengtavle
         {
             c.Location = new Point(p.X - (c.Width / 2), p.Y - (c.Height / 2));
         }
+
     }
 }
