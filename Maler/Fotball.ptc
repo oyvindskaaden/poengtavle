@@ -1,0 +1,27 @@
+[
+  {
+    "ConfType": "Poeng",
+    "Pos": "10, 10",
+    "Info": null
+  },
+  {
+    "ConfType": "Poeng",
+    "Pos": "434, 10",
+    "Info": null
+  },
+  {
+    "ConfType": "Klokke",
+    "Pos": "232, 10",
+    "Info": null
+  },
+  {
+    "ConfType": "Reklame",
+    "Pos": "8, 214",
+    "Info": null
+  },
+  {
+    "ConfType": "Perioder",
+    "Pos": "279, 213",
+    "Info": null
+  }
+]

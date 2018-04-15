@@ -28,24 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.poengPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // poengPanel
+            // 
+            this.poengPanel.AutoSize = true;
+            this.poengPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.poengPanel.Location = new System.Drawing.Point(163, 103);
+            this.poengPanel.Name = "poengPanel";
+            this.poengPanel.Size = new System.Drawing.Size(0, 0);
+            this.poengPanel.TabIndex = 0;
+            this.poengPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.MovePanelPanel);
             // 
             // FormPoengtavle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(626, 291);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.ClientSize = new System.Drawing.Size(900, 551);
+            this.Controls.Add(this.poengPanel);
             this.Name = "FormPoengtavle";
             this.Text = "Poengtavle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPoengtavleClosing);
+            this.ResizeEnd += new System.EventHandler(this.MovePanel);
+            this.SizeChanged += new System.EventHandler(this.MovePanel);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        public System.Windows.Forms.Panel poengPanel;
     }
 }

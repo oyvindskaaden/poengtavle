@@ -62,6 +62,9 @@
     <Compile Include="FormPoengtavle.Designer.cs">
       <DependentUpon>FormPoengtavle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Layout.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Methods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
