@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormControl));
             this.menuStripStd = new System.Windows.Forms.MenuStrip();
             this.filToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +49,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.mediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.pMusic = new System.Windows.Forms.Panel();
             this.bOpenMusic = new System.Windows.Forms.Button();
@@ -58,10 +56,10 @@
             this.configPanel = new System.Windows.Forms.Panel();
             this.kontrolPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.layoutPanel = new System.Windows.Forms.Panel();
             this.saveConfigDialog = new System.Windows.Forms.SaveFileDialog();
             this.openConfigDialog = new System.Windows.Forms.OpenFileDialog();
@@ -99,7 +97,7 @@
             // 
             this.lagreToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lagreToolStripMenuItem.Name = "lagreToolStripMenuItem";
-            this.lagreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lagreToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.lagreToolStripMenuItem.Text = "Lagre";
             this.lagreToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -107,7 +105,7 @@
             // 
             this.åpneToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.åpneToolStripMenuItem.Name = "åpneToolStripMenuItem";
-            this.åpneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.åpneToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.åpneToolStripMenuItem.Text = "Åpne";
             this.åpneToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -126,7 +124,7 @@
             // 
             this.poengtavleToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.poengtavleToolStripMenuItem2.Name = "poengtavleToolStripMenuItem2";
-            this.poengtavleToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.poengtavleToolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
             this.poengtavleToolStripMenuItem2.Text = "Poengtavle";
             this.poengtavleToolStripMenuItem2.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -134,7 +132,7 @@
             // 
             this.fraMalToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.fraMalToolStripMenuItem1.Name = "fraMalToolStripMenuItem1";
-            this.fraMalToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.fraMalToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
             this.fraMalToolStripMenuItem1.Text = "Fra fil";
             this.fraMalToolStripMenuItem1.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -143,7 +141,7 @@
             this.malToolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.malToolStripMenuItem1.Enabled = false;
             this.malToolStripMenuItem1.Name = "malToolStripMenuItem1";
-            this.malToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.malToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
             this.malToolStripMenuItem1.Text = "Mal";
             this.malToolStripMenuItem1.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -161,7 +159,7 @@
             this.startFullskjermToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startFullskjermToolStripMenuItem.Enabled = false;
             this.startFullskjermToolStripMenuItem.Name = "startFullskjermToolStripMenuItem";
-            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startFullskjermToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.startFullskjermToolStripMenuItem.Text = "Start";
             this.startFullskjermToolStripMenuItem.Click += new System.EventHandler(this.MenuClicked);
             // 
@@ -302,7 +300,7 @@
             this.configPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configPanel.Location = new System.Drawing.Point(0, 0);
             this.configPanel.Name = "configPanel";
-            this.configPanel.Size = new System.Drawing.Size(734, 544);
+            this.configPanel.Size = new System.Drawing.Size(648, 544);
             this.configPanel.TabIndex = 7;
             // 
             // kontrolPanel
@@ -329,25 +327,15 @@
             this.panel1.Size = new System.Drawing.Size(86, 544);
             this.panel1.TabIndex = 0;
             // 
-            // button5
+            // button8
             // 
-            this.button5.Location = new System.Drawing.Point(4, 4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "Poeng";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.ConfigBtClick);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(4, 33);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "Klokke";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.ConfigBtClick);
+            this.button8.Location = new System.Drawing.Point(4, 91);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 3;
+            this.button8.Text = "Reklame";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.ConfigBtClick);
             // 
             // button7
             // 
@@ -359,15 +347,25 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.ConfigBtClick);
             // 
-            // button8
+            // button6
             // 
-            this.button8.Location = new System.Drawing.Point(4, 91);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 3;
-            this.button8.Text = "Reklame";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.ConfigBtClick);
+            this.button6.Location = new System.Drawing.Point(4, 33);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Klokke";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.ConfigBtClick);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(4, 4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "Poeng";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.ConfigBtClick);
             // 
             // layoutPanel
             // 
@@ -444,7 +442,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Timer timer1;
         private AxWMPLib.AxWindowsMediaPlayer mediaPlayer;
         private System.Windows.Forms.Panel pMusic;
         private System.Windows.Forms.Button bOpenMusic;
